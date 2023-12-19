@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import NProgress from 'nprogress';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,8 +16,19 @@ const router = createRouter({
     },
   ],
   scrollBehavior() {
-    return { top: 0 }
+    return { top: 0 };
   },
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  console.log(to.path);
+  console.log(from.path);
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
+
+export default router;

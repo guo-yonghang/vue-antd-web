@@ -1,5 +1,10 @@
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
-const pinia = createPinia()
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
-export default pinia
+export * from './modules/global';
+export * from './modules/setting';
+
+export default pinia;

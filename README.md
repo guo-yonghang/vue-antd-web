@@ -1,5 +1,7 @@
 # vue-study
 
+#### 代码提交规范
+
 ```
 feat：新功能（feature）。
 
@@ -24,4 +26,27 @@ revert：回滚到上一个版本。
 merge：代码合并。
 
 sync：同步主线或分支的Bug。
+```
+
+#### 格式化代码检查配置
+
+```
+npx eslint --init
+npm i prettier eslint-config-prettier eslint-plugin-prettier -D
+.prettierrc
+.prettierignore
+.eslintrc.cjs
+.eslintignore
+.vscode/settings.json
+```
+
+#### 项目运行
+
+```
+npm install 下载项目依赖
+npm run dev 启动项目
+npm run lint 代码检查
+npm run build 项目打包
+npm run preview 预览打包
+npm run format 格式化代码
 ```

@@ -3,11 +3,12 @@
 </template>
 
 <script setup lang="tsx" name="login">
-const loginState = () => (
-  <div className="full flxc">
-    <a-button type="primary">login-tsx-page</a-button>
-  </div>
-)
+  const loginState = () => (
+    <div class="full flxc">
+      <a-button type="primary">login-tsx-page</a-button>
+      <span style="color:rgb(var(--primary-6))">primary-color</span>
+    </div>
+  );
 </script>
 
 <style lang="less" scoped></style>
