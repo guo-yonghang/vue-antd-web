@@ -1,2 +1,52 @@
 # vue-study
-study vue3 typescript tsx @vueuse arco-design
+
+#### 代码提交规范
+
+```
+feat：新功能（feature）。
+
+fix/to：修复bug，可以是QA发现的BUG，也可以是研发自己发现的BUG。
+
+fix：产生diff并自动修复此问题。适合于一次提交直接修复问题
+to：只产生diff不自动修复此问题。适合于多次提交。最终修复问题提交时使用fix
+docs：文档（documentation）。
+
+style：格式（不影响代码运行的变动）。
+
+refactor：重构（即不是新增功能，也不是修改bug的代码变动）。
+
+perf：优化相关，比如提升性能、体验。
+
+test：增加测试。
+
+chore：构建过程或辅助工具的变动。
+
+revert：回滚到上一个版本。
+
+merge：代码合并。
+
+sync：同步主线或分支的Bug。
+```
+
+#### 格式化代码检查配置
+
+```
+npx eslint --init
+npm i prettier eslint-config-prettier eslint-plugin-prettier -D
+.prettierrc
+.prettierignore
+.eslintrc.cjs
+.eslintignore
+.vscode/settings.json
+```
+
+#### 项目运行
+
+```
+npm install 下载项目依赖
+npm run dev 启动项目
+npm run lint 代码检查
+npm run build 项目打包
+npm run preview 预览打包
+npm run format 格式化代码
+```
