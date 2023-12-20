@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 
+import 'virtual:svg-icons-register';
+
 import './styles/common.less';
 import './styles/reset.less';
 import 'nprogress/nprogress.css';
