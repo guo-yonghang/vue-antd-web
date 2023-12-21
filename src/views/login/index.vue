@@ -1,45 +1,48 @@
 <template>
-  <component :is="loginState" />
-  <SvgIcon name="system" />
-  <SvgIcon name="config" />
+  <div>
+    <SuperTable
+      :requestApi="getUserList"
+      :row-class-name="(_record: any, index: any) => (index % 2 === 1 ? 'table-striped' : null)"
+      :columns="columns"
+      :displayStripe="true"
+    >
+      <template #bodyCell="{ column }">
+        <template v-if="column.key === 'action'">
+          <a-button type="link">重置</a-button>
+        </template>
+      </template>
+    </SuperTable>
+  </div>
 </template>
 
-<script setup lang="tsx" name="login">
-  import { getUserList, getUserDetail, delUser } from '@/api/modules/user';
+<script lang="ts" setup>
+  import { getUserList } from '@/api/modules/user';
 
-  const loginState = () => (
-    <div class=" flxc">
-      <a-space>
-        <a-button type="primary" onClick={handleUserList}>
-          user-list
-        </a-button>
-        <a-button type="primary" onClick={handleUserDetail}>
-          user-detail
-        </a-button>
-        <a-button type="primary" status="danger" onClick={handleUserDel}>
-          user-delete
-        </a-button>
-      </a-space>
-    </div>
-  );
-
-  const handleUserList = () => {
-    getUserList({ pageNum: 1, pageSize: 10 }).then((res) => {
-      console.log('user-list', res);
-    });
-  };
-
-  const handleUserDetail = () => {
-    getUserDetail('1').then((res) => {
-      console.log('user-detail', res);
-    });
-  };
-
-  const handleUserDel = () => {
-    delUser('1').then((res) => {
-      console.log('user-delete', res);
-    });
-  };
+  const columns = [
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+      key: 'age',
+      align: 'center',
+    },
+    {
+      title: '住址',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: '操作',
+      dateIndex: 'action',
+      key: 'action',
+      align: 'center',
+    },
+  ];
 </script>
 
-<style lang="less" scoped></style>
+<style scoped lang="less"></style>

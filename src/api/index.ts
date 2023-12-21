@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ResDataType } from '@/interface';
 import { showScreenLoading, hideScreenLoading } from '@/utils/screenLoading';
+import { message } from 'ant-design-vue';
 
 export interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
   loadingMessage?: string; //新增可loading
@@ -30,7 +31,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     hideScreenLoading((response.config as CustomAxiosRequestConfig).loadingMessage || '');
-    return response.data;
+    if (response.data.code !== '200') {
+      message.warn(response.data.message);
+      return Promise.reject();
+    }
+    return response.data.data;
   },
   (error: AxiosError) => {
     hideScreenLoading((error.config as CustomAxiosRequestConfig).loadingMessage || '');

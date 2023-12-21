@@ -1,18 +1,18 @@
-import { Message } from '@arco-design/web-vue';
+import { message } from 'ant-design-vue';
 
 const loadingMap: Map<string, any> = new Map();
 
 export const showScreenLoading = (loadingMessage: string): void => {
   if (!loadingMessage) return;
   if (loadingMap.has(loadingMessage)) return;
-  const loadingTask = Message.loading({ content: loadingMessage, duration: 0, showIcon: true });
+  const loadingTask = message.loading(loadingMessage, 0);
   loadingMap.set(loadingMessage, loadingTask);
 };
 
 export const hideScreenLoading = (loadingMessage: string) => {
   if (!loadingMessage) return;
   if (!loadingMap.has(loadingMessage)) return;
-  loadingMap.get(loadingMessage).close();
+  loadingMap.get(loadingMessage)();
   loadingMap.delete(loadingMessage);
 };
 

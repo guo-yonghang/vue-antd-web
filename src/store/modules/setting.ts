@@ -3,7 +3,7 @@ import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 
 interface SettingStoreState {
   isCollapse: boolean;
-  language: 'zh' | 'en' | null;
+  language: 'zh' | 'en';
   isDark: boolean;
   showTabs: boolean;
   showTags: boolean;

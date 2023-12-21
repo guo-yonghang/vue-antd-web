@@ -9,4 +9,11 @@ export default defineConfig({
       '@': resolve('src'),
     },
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
 });
