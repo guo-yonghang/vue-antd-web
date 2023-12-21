@@ -18,7 +18,7 @@ export interface PageType {
 //列表返回值
 export interface ResListType<T> extends PageType {
   list: T[];
-  total?: number;
+  total: number;
   pageSize: number;
   ppageNum: number;
 }
@@ -34,6 +34,7 @@ export namespace User {
   export type GenderType = '男' | '女';
   //用户状态
   export type StatusType = 'resolve' | 'reject' | 'pending';
+
   //用户信息
   export interface UserType {
     address: string;
@@ -52,6 +53,7 @@ export namespace User {
     education: EducationType;
     status: StatusType;
   }
+
   //用户列表参数
   export interface ReqListType extends PageType {
     username?: string;

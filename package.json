@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.7.0",
+    "ant-design-vue": "^4.0.8",
     "axios": "^1.6.2",
+    "dayjs": "^1.11.10",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
@@ -21,8 +23,6 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.53.3",
-    "@arco-plugins/vite-vue": "^1.4.5",
     "@types/nprogress": "^0.2.3",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
