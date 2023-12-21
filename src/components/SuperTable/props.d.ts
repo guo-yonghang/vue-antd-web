@@ -1,7 +1,5 @@
 // type of request's params
 export interface SearchParamsType {
-  pageNum?: number;
-  pageSize?: number;
   [key: string]: any;
 }
 
@@ -30,5 +28,10 @@ export interface SuperTableProps {
 // type of component's emits
 export interface SuperTableEmit {
   (e: 'search', value: any): void;
+
   (e: 'reset', value: any): void;
+
+  (e: 'reload', value: any): void;
+
+  (e: 'change', value: any): void;
 }

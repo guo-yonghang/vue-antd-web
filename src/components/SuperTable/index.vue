@@ -1,5 +1,12 @@
 <template>
   <div>
+    <a-card>
+      <a-space>
+        <a-button type="primary" @click="handleSearch">search</a-button>
+        <a-button type="primary" @click="handleReset">reset</a-button>
+        <a-button type="primary" @click="handleReload">reload</a-button>
+      </a-space>
+    </a-card>
     <a-table
       ref="table"
       class="super-table"
@@ -28,7 +35,6 @@
 <script lang="ts" setup name="SuperTable">
   import { ref, onBeforeMount } from 'vue';
   import { SuperTableProps, SuperTableEmit } from './props';
-  import { PaginationType } from './interface';
   import { useSuperTable } from './hooks';
 
   const emits = defineEmits<SuperTableEmit>();
@@ -39,10 +45,12 @@
     displayPage: true,
     displayForm: true,
     displayUtil: true,
-    searchParams: () => ({ pageNum: 1, pageSize: 10 }),
   });
 
-  const { loading, dataSource, pagination, handleRequest, handleRowClass } = useSuperTable(props);
+  const { loading, dataSource, pagination, handleRequest, handlePagination, handleSearch, handleReset, handleReload, handleRowClass } = useSuperTable(
+    props,
+    emits,
+  );
 
   // const form = ref();
   const table = ref();
@@ -51,11 +59,9 @@
     handleRequest();
   });
 
-  const handleChange = (pagination: PaginationType, filters: any, sorter: any, { currentDataSource }: any) => {
-    console.log('pagination', pagination);
-    console.log('filters', filters);
-    console.log('sorter', sorter);
-    console.log('currentDataSource', currentDataSource);
+  const handleChange = (pagination: Record<string, number>, filters: any, sorter: any, { currentDataSource }: any) => {
+    handlePagination(pagination);
+    emits('change', { pagination, filters, sorter, currentDataSource });
   };
 
   defineExpose({ table });
