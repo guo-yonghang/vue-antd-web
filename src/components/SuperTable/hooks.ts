@@ -1,9 +1,8 @@
-import { ref, reactive } from 'vue';
-import { PaginationType } from './interface';
+import { ref, reactive, computed } from 'vue';
+import { PaginationType, ResDataType } from './interface';
 import { SuperTableProps, SuperTableEmit } from './props';
-import { ResListType } from '@/interface';
 
-export const useSuperTable = (props: SuperTableProps, emits: SuperTableEmit) => {
+export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) => {
   // loading status of table
   const loading = ref<boolean>(false);
 
@@ -17,19 +16,26 @@ export const useSuperTable = (props: SuperTableProps, emits: SuperTableEmit) => 
     total: 0,
   });
 
+  // selected keys
+  const selectedRowKeys = ref<(string | number)[]>([]);
+
+  // selected rows
+  const selectedRows = ref<any[]>([]);
+
   // set loading status
-  const setLoading = (val: boolean) => {
+  const setLoading = (val: boolean): void => {
     loading.value = val;
   };
 
   // request api to retrieve table data
   const handleRequest = async (): Promise<void> => {
-    if (!props.requestApi) return;
+    if (!props.request) return;
     if (loading.value) return;
     setLoading(true);
+    emits('request', null);
     try {
       const { pageNum, pageSize } = pagination;
-      const result: ResListType<any> = await props.requestApi({ pageNum, pageSize, ...props.searchParams });
+      const result: ResDataType<any> = await props.request({ pageNum, pageSize, ...props.searchParams });
       console.log('请求结果', result);
       pagination.pageNum = result.pageNum;
       pagination.pageSize = result.pageSize;
@@ -38,6 +44,8 @@ export const useSuperTable = (props: SuperTableProps, emits: SuperTableEmit) => 
     } catch (error) {
       console.log('SuperTable hooks request fail');
     } finally {
+      selectedRowKeys.value = [];
+      selectedRows.value = [];
       setLoading(false);
     }
   };
@@ -56,40 +64,69 @@ export const useSuperTable = (props: SuperTableProps, emits: SuperTableEmit) => 
   };
 
   // handle table search
-  const handleSearch = () => {
-    emits('search', {});
+  const handleSearch = (): void => {
+    emits('search', null);
     !loading.value && handleRequest();
   };
 
   // handle table reset
-  const handleReset = () => {
-    emits('reset', {});
+  const handleReset = (): void => {
+    emits('reset', null);
     pagination.pageNum = 1;
     !loading.value && handleRequest();
   };
 
   // handle table reload
-  const handleReload = () => {
-    emits('reload', {});
+  const handleReload = (): void => {
+    emits('reload', null);
     !loading.value && handleRequest();
   };
 
   // get row class name [stripe]
-  const handleRowClass = (_record: any, index: number): any => {
-    if (props.displayStripe) return index % 2 === 1 ? 'row-stripe' : null;
-    return null;
+  const getRowClassConfig = (_record: any, index: number): any => {
+    let className = '';
+    if (props.showStripe) {
+      className += index % 2 === 1 ? 'row-stripe ' : null;
+    }
+    return className || null;
   };
+
+  // table scroll config
+  const getScrollConfig = computed(() => {
+    return {
+      scrollToFirstRowOnChange: true,
+      x: 'max-content',
+      ...props.scroll,
+    };
+  });
+
+  // selection config
+  const selection = computed(() => {
+    return props.rowSelection === null
+      ? null
+      : {
+          ...props.rowSelection,
+          onChange: (keys: (string | number)[], rows: any[]) => {
+            selectedRowKeys.value = keys;
+            selectedRows.value = rows;
+          },
+        };
+  });
 
   return {
     loading,
-    setLoading,
     dataSource,
     pagination,
+    selectedRowKeys,
+    selectedRows,
+    setLoading,
     handleRequest,
     handlePagination,
     handleSearch,
     handleReset,
     handleReload,
-    handleRowClass,
+    getRowClassConfig,
+    getScrollConfig,
+    selection,
   };
 };

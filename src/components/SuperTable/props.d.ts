@@ -1,3 +1,5 @@
+import type { TableProps } from 'ant-design-vue';
+
 // type of request's params
 export interface SearchParamsType {
   [key: string]: any;
@@ -14,19 +16,22 @@ export interface SearchConfigType {
 
 // type of component's props
 export interface SuperTableProps {
-  displayStripe?: boolean;
-  displayPage?: boolean;
-  displayForm?: boolean;
-  displayUtil?: boolean;
+  rowKey?: string;
+  request?: (params: any) => Promise<T>;
+  showStripe?: boolean;
+  showPage?: boolean;
+  showUtil?: boolean;
+  showExport?: boolean;
   searchParams?: SearchParamsType;
   searchConfig?: SearchConfigType;
-  onSearch?: (values: Record<string, any>, callback: () => void) => void;
-  onReset?: () => void;
-  requestApi?: (params: any) => Promise<T>;
+  rowSelection?: TableProps['rowSelection'];
+  scroll?: TableProps['scroll'];
 }
 
 // type of component's emits
 export interface SuperTableEmit {
+  (e: 'request', value: any): void;
+
   (e: 'search', value: any): void;
 
   (e: 'reset', value: any): void;

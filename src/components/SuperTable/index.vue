@@ -1,20 +1,39 @@
 <template>
   <div>
-    <a-card>
-      <a-space>
-        <a-button type="primary" @click="handleSearch">search</a-button>
-        <a-button type="primary" @click="handleReset">reset</a-button>
-        <a-button type="primary" @click="handleReload">reload</a-button>
-      </a-space>
+    <a-card size="small">
+      <div class="super-table__util" v-if="showUtil">
+        <a-space>
+          <slot name="utilLeft" v-if="$slots.utilLeft" />
+          <span v-else></span>
+        </a-space>
+        <a-space>
+          <slot name="utilRight" />
+          <a-tooltip title="刷新" :color="token.colorPrimary">
+            <a-button shape="circle" :icon="h(ReloadOutlined)" @click="handleReload" />
+          </a-tooltip>
+          <a-tooltip title="导出" :color="token.colorPrimary">
+            <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" v-if="showExport" @click="handleExport" />
+          </a-tooltip>
+          <a-tooltip title="列配置" :color="token.colorPrimary">
+            <a-button shape="circle" :icon="h(MenuOutlined)" />
+          </a-tooltip>
+          <a-tooltip title="搜索开关" :color="token.colorPrimary">
+            <a-button shape="circle" :icon="h(SearchOutlined)" />
+          </a-tooltip>
+        </a-space>
+      </div>
     </a-card>
     <a-table
       ref="table"
       class="super-table"
       v-bind="$attrs"
+      :row-key="rowKey"
       :loading="loading"
       :dataSource="dataSource"
-      :pagination="displayPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
-      :row-class-name="handleRowClass"
+      :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
+      :row-selection="selection"
+      :row-class-name="getRowClassConfig"
+      :scroll="getScrollConfig"
       @change="handleChange"
     >
       <template #headerCell="{ text, record, index, column }">
@@ -33,24 +52,40 @@
 </template>
 
 <script lang="ts" setup name="SuperTable">
-  import { ref, onBeforeMount } from 'vue';
+  import { ref, onBeforeMount, h } from 'vue';
+  import { theme } from 'ant-design-vue';
+  import { SearchOutlined, ReloadOutlined, MenuOutlined, ExportOutlined } from '@ant-design/icons-vue';
   import { SuperTableProps, SuperTableEmit } from './props';
-  import { useSuperTable } from './hooks';
+  import { useTableRequest } from './hooks.ts';
 
   const emits = defineEmits<SuperTableEmit>();
 
   const props = withDefaults(defineProps<SuperTableProps>(), {
     rowKey: 'id',
-    displayStripe: false,
-    displayPage: true,
-    displayForm: true,
-    displayUtil: true,
+    showStripe: true,
+    showPage: true,
+    showUtil: true,
+    showExport: true,
+    rowSelection: () => null,
   });
 
-  const { loading, dataSource, pagination, handleRequest, handlePagination, handleSearch, handleReset, handleReload, handleRowClass } = useSuperTable(
-    props,
-    emits,
-  );
+  const {
+    loading,
+    dataSource,
+    pagination,
+    selectedRowKeys,
+    selectedRows,
+    handleRequest,
+    handlePagination,
+    handleSearch,
+    handleReset,
+    handleReload,
+    getRowClassConfig,
+    getScrollConfig,
+    selection,
+  } = useTableRequest(props, emits);
+
+  const { token } = theme.useToken();
 
   // const form = ref();
   const table = ref();
@@ -59,12 +94,18 @@
     handleRequest();
   });
 
+  // a-table's change handle
   const handleChange = (pagination: Record<string, number>, filters: any, sorter: any, { currentDataSource }: any) => {
     handlePagination(pagination);
     emits('change', { pagination, filters, sorter, currentDataSource });
   };
 
-  defineExpose({ table });
+  // super-table export handle
+  const handleExport = () => {
+    console.log('super-table export handle');
+  };
+
+  defineExpose({ table, selectedRowKeys, selectedRows });
 </script>
 
 <style lang="less" scoped>
