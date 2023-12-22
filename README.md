@@ -15,3 +15,7 @@ npm run preview 预览打包
 
 npm run format 格式化代码
 ```
+
+### 超级表格组件
+
+[文档地址](https://github.com/guo-yonghang/vue-study/tree/main/src/components/SuperTable)
