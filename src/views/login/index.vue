@@ -1,30 +1,37 @@
 <template>
-  <div>
-    <SuperTable
-      bordered
-      displayStripe
-      :requestApi="getUserList"
-      :columns="columns"
-      :scroll="{ x: 2700 }"
-      @search="onSearch"
-      @reset="onReset"
-      @reload="onReload"
-      @change="onChange"
-    >
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
-        </template>
+  <SuperTable
+    bordered
+    show-stripe
+    row-selection
+    :show-util="true"
+    :request="getUserList"
+    :columns="columns"
+    :scroll="{}"
+    @search="onSearch"
+    @reset="onReset"
+    @reload="onReload"
+    @change="onChange"
+  >
+    <template #utilLeft>
+      <a-button>插槽按钮</a-button>
+    </template>
+    <template #utilRight>
+      <a-button shape="circle">slot</a-button>
+    </template>
+    <template #bodyCell="{ column, record }">
+      <template v-if="column.key === 'action'">
+        <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
       </template>
-    </SuperTable>
-  </div>
+    </template>
+  </SuperTable>
 </template>
 
 <script lang="tsx" setup>
   import { getUserList, delUser } from '@/api/modules/user';
   import { Image, Button, Tag, message } from 'ant-design-vue';
+  import type { TableColumnsType } from 'ant-design-vue';
 
-  const columns = [
+  const columns: TableColumnsType = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -37,6 +44,7 @@
       dataIndex: 'avatar',
       key: 'avatar',
       align: 'center',
+      width: 100,
       customRender: ({ text }: { text: string }) => {
         return <Image width={50} src={text} />;
       },
@@ -156,10 +164,8 @@
     },
     {
       title: '操作',
-      dateIndex: 'action',
       key: 'action',
       align: 'center',
-      width: 120,
       fixed: 'right',
     },
   ];

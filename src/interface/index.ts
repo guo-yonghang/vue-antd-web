@@ -19,8 +19,6 @@ export interface PageType {
 export interface ResListType<T> extends PageType {
   list: T[];
   total: number;
-  pageSize: number;
-  ppageNum: number;
 }
 
 //布尔
