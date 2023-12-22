@@ -11,7 +11,7 @@ interface SettingStoreState {
 }
 
 export const useSettingStore = defineStore({
-  id: 'vue-global',
+  id: 'vue-setting',
   state: (): SettingStoreState => ({
     isCollapse: false,
     language: 'zh',

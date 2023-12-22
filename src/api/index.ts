@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ResDataType } from '@/interface';
-import { showScreenLoading, hideScreenLoading } from '@/utils/screenLoading';
+import { useGlobalStore } from '@/store';
+import { showLoadingUtil, hideLoadingUtil } from '@/utils/loadingUtil';
 import { message } from 'ant-design-vue';
 
 export interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -19,8 +20,9 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: CustomInternalAxiosRequestConfig) => {
-    config.headers.apifoxToken = 'A3kmh2WjR2_FQFgEeTjJQ';
-    config.loadingMessage && showScreenLoading(config.loadingMessage);
+    const globalStore = useGlobalStore();
+    config.headers.apifoxToken = globalStore.token;
+    config.loadingMessage && showLoadingUtil(config.loadingMessage);
     return config;
   },
   (error: AxiosError) => {
@@ -30,7 +32,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    hideScreenLoading((response.config as CustomAxiosRequestConfig).loadingMessage || '');
+    hideLoadingUtil((response.config as CustomAxiosRequestConfig).loadingMessage || '');
     if (response.data.code !== '200') {
       message.warn(response.data.message);
       return Promise.reject();
@@ -38,7 +40,7 @@ axiosInstance.interceptors.response.use(
     return response.data.data;
   },
   (error: AxiosError) => {
-    hideScreenLoading((error.config as CustomAxiosRequestConfig).loadingMessage || '');
+    hideLoadingUtil((error.config as CustomAxiosRequestConfig).loadingMessage || '');
     return Promise.reject(error);
   },
 );
