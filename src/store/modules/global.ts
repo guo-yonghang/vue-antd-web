@@ -11,7 +11,7 @@ interface GlobalStoreState {
 export const useGlobalStore = defineStore({
   id: 'vue-global',
   state: (): GlobalStoreState => ({
-    token: '',
+    token: 'A3kmh2WjR2_FQFgEeTjJQ',
     userInfo: { name: '', age: 22 },
   }),
   getters: {},

@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <div class="super-table">
+    <a-card size="small" class="super-table__form">
+      {{ searchConfig?.searchText || '查询' }}
+      {{ searchConfig?.resetText || '重置' }}
+      {{ searchConfig?.displayReset || true }}
+      {{ searchConfig?.displaySearch || true }}
+      {{ searchConfig?.labelWidth || '80px' }}
+    </a-card>
     <a-card size="small">
       <div class="super-table__util" v-if="showUtil">
         <a-space>
@@ -9,7 +16,7 @@
         <a-space>
           <slot name="utilRight" />
           <a-tooltip title="刷新" :color="token.colorPrimary">
-            <a-button shape="circle" :icon="h(ReloadOutlined)" @click="handleReload" />
+            <a-button shape="circle" :icon="h(ReloadOutlined)" :disabled="loading" @click="handleReload" />
           </a-tooltip>
           <a-tooltip title="导出" :color="token.colorPrimary">
             <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" v-if="showExport" @click="handleExport" />
@@ -23,31 +30,27 @@
         </a-space>
       </div>
     </a-card>
-    <a-table
-      ref="table"
-      class="super-table"
-      v-bind="$attrs"
-      :row-key="rowKey"
-      :loading="loading"
-      :dataSource="dataSource"
-      :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
-      :row-selection="selection"
-      :row-class-name="getRowClassConfig"
-      :scroll="getScrollConfig"
-      @change="handleChange"
-    >
-      <template #headerCell="{ text, record, index, column }">
-        <slot name="headerCell" :text="text" :record="record" :index="index" :column="column" />
-      </template>
-      <template #bodyCell="{ text, record, index, column }">
-        <slot name="bodyCell" :text="text" :record="record" :index="index" :column="column" />
-      </template>
-    </a-table>
-    <!-- {{ searchConfig?.searchText || '查询' }}
-    {{ searchConfig?.resetText || '重置' }}
-    {{ searchConfig?.displayReset || true }}
-    {{ searchConfig?.displaySearch || true }}
-    {{ searchConfig?.labelWidth || '80px' }} -->
+    <div class="super-table__table">
+      <a-table
+        ref="table"
+        v-bind="$attrs"
+        :row-key="rowKey"
+        :loading="loading"
+        :dataSource="dataSource"
+        :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
+        :row-selection="selection"
+        :row-class-name="getRowClassConfig"
+        :scroll="getScrollConfig"
+        @change="handleChange"
+      >
+        <template #headerCell="{ text, record, index, column }">
+          <slot name="headerCell" :text="text" :record="record" :index="index" :column="column" />
+        </template>
+        <template #bodyCell="{ text, record, index, column }">
+          <slot name="bodyCell" :text="text" :record="record" :index="index" :column="column" />
+        </template>
+      </a-table>
+    </div>
   </div>
 </template>
 

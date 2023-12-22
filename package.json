@@ -1,8 +1,14 @@
 {
   "name": "vue-study",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "guo-yonghang",
+    "email": "",
+    "url": "https://github.com/guo-yonghang/vue-study"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
