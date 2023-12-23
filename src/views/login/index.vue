@@ -1,35 +1,139 @@
 <template>
-  <SuperTable
-    bordered
-    show-stripe
-    row-selection
-    :show-util="true"
-    :request="getUserList"
-    :columns="columns"
-    :scroll="{}"
-    @search="onSearch"
-    @reset="onReset"
-    @reload="onReload"
-    @change="onChange"
-  >
-    <template #utilLeft>
-      <a-button>插槽按钮</a-button>
-    </template>
-    <template #utilRight>
-      <a-button shape="circle">slot</a-button>
-    </template>
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'action'">
-        <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
+  <div>
+    <SuperCascader v-model:value="test1" :options="options1" placeholder="shab" />
+    <SuperTable
+      bordered
+      show-stripe
+      row-selection
+      :show-util="true"
+      :request="getUserList"
+      :columns="columns"
+      :search-params="searchParams"
+      :search-columns="searchColumns"
+      :scroll="{}"
+      @search="onSearch"
+      @reset="onReset"
+      @reload="onReload"
+      @change="onChange"
+    >
+      <template #utilLeft>
+        <a-button>插槽按钮</a-button>
       </template>
-    </template>
-  </SuperTable>
+      <template #utilRight>
+        <a-button shape="circle">slot</a-button>
+      </template>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
+        </template>
+      </template>
+    </SuperTable>
+  </div>
 </template>
 
 <script lang="tsx" setup>
-  import { getUserList, delUser } from '@/api/modules/user';
-  import { Image, Button, Tag, message } from 'ant-design-vue';
+  import { ref, reactive } from 'vue';
+  import { Image, Button, Tag, message, Input } from 'ant-design-vue';
   import type { TableColumnsType } from 'ant-design-vue';
+  import type { SearchColumnsType } from '@/components/SuperTable';
+  import { getUserList, delUser } from '@/api/modules/user';
+
+  const test1 = ref(['1', '1-1']);
+  // const test1 = ref('1-1');
+
+  const options1 = [
+    {
+      label: '一年级',
+      value: '1',
+      children: [
+        { label: '一班', value: '1-1' },
+        { label: '二班', value: '1-2' },
+      ],
+    },
+    {
+      label: '二年级',
+      value: '2',
+      children: [
+        { label: '一班', value: '2-1' },
+        { label: '二班', value: '2-2' },
+      ],
+    },
+  ];
+
+  const searchParams = reactive<any>({});
+
+  const searchColumns: SearchColumnsType = [
+    {
+      key: 'input',
+      label: 'input',
+      type: 'input',
+    },
+    {
+      key: 'render',
+      label: 'render',
+      type: 'input',
+      render: () => {
+        return <Input v-model:value={searchParams.render} placeholder="请输入" />;
+      },
+    },
+    {
+      key: 'select',
+      label: 'select',
+      type: 'select',
+      attrs: {
+        options: [
+          { label: 'resolve', value: 'resolve' },
+          { label: 'reject', value: 'reject' },
+          { label: 'pending', value: 'reject' },
+        ],
+      },
+    },
+    {
+      key: 'cascader',
+      label: 'cascader',
+      type: 'cascader',
+      attrs: {
+        options: [
+          {
+            label: '一年级',
+            value: '1',
+            children: [
+              { label: '一班', value: '1-1' },
+              { label: '二班', value: '1-2' },
+            ],
+          },
+          {
+            label: '二年级',
+            value: '2',
+            children: [
+              { label: '一班', value: '2-1' },
+              { label: '二班', value: '2-2' },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      key: 'date',
+      label: 'date',
+      type: 'date',
+    },
+    {
+      key: 'dateRange',
+      label: 'dateRange',
+      type: 'date-range',
+    },
+    {
+      key: 'time',
+      label: 'time',
+      type: 'time',
+    },
+    {
+      key: 'time-range',
+      label: 'time-range',
+      type: 'time-range',
+    },
+  ];
 
   const columns: TableColumnsType = [
     {
