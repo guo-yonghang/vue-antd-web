@@ -1,6 +1,5 @@
 import { ref, reactive, computed } from 'vue';
-import { PaginationType, ResDataType } from './interface';
-import { SuperTableProps, SuperTableEmit } from './props';
+import { PaginationType, ResDataType, SuperTableProps, SuperTableEmit } from './index';
 
 export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) => {
   // loading status of table
@@ -102,8 +101,8 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
 
   // selection config
   const selection = computed(() => {
-    return props.rowSelection === null
-      ? null
+    return props.rowSelection === undefined
+      ? undefined
       : {
           ...props.rowSelection,
           onChange: (keys: (string | number)[], rows: any[]) => {

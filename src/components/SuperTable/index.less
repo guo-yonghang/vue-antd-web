@@ -13,16 +13,34 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+}
 
-  &__form {
-  }
-
-  &__util {
+// form area of table
+.super-table__form {
+  .ant-form {
     display: flex;
-    justify-content: space-between;
-  }
+    flex-wrap: wrap;
 
-  &__table {
-    flex: 1;
+    .ant-form-item {
+      width: 400px;
+
+      .ant-picker {
+        width: 100%;
+      }
+    }
   }
+}
+
+// util area of table
+.super-table__util {
+  width: 100%;
+  height: 56px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+// table area of table
+.super-table__table {
+  flex: 1;
 }

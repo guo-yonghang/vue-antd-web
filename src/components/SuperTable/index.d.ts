@@ -1,18 +1,37 @@
 import type { TableProps } from 'ant-design-vue';
 
+// type of pagination
+export interface PaginationType extends PageType {
+  pageNum: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface ResDataType<T> extends PaginationType {
+  list: T[];
+}
+
 // type of request's params
 export interface SearchParamsType {
   [key: string]: any;
 }
 
 // type of request's config
-export interface SearchConfigType {
+export interface SearchConfigType extends Record<string, any> {
   searchText?: string;
   resetText?: string;
-  displaySearch?: boolean;
-  displayReset?: boolean;
-  labelWidth?: number;
 }
+
+// type of request's colums
+interface SearchColumnsItemType {
+  key: string;
+  label: string;
+  type: 'input' | 'select' | 'input-number' | 'cascader' | 'date' | 'date-range' | 'time' | 'time-range';
+  render?: () => JSX.Element;
+  attrs?: Record<string, any>;
+}
+
+export type SearchColumnsType = SearchColumnsItemType[];
 
 // type of component's props
 export interface SuperTableProps {
@@ -23,6 +42,7 @@ export interface SuperTableProps {
   showUtil?: boolean;
   showExport?: boolean;
   searchParams?: SearchParamsType;
+  searchColumns?: SearchColumnsType;
   searchConfig?: SearchConfigType;
   rowSelection?: TableProps['rowSelection'];
   scroll?: TableProps['scroll'];
