@@ -1,19 +1,18 @@
 <template>
   <div class="super-table">
-    <div class="super-table__form">
-      <a-form ref="formRef" :model="searchParams" v-bind="searchConfig">
+    <div class="super-table__form" v-if="formVisible && searchColumns?.length">
+      <a-form ref="formRef" :model="searchParams" :style="{ height: expandVisible ? 'auto' : '60px' }" v-bind="searchConfig">
         <template v-for="item in searchColumns" :key="item.key">
           <a-form-item :label="item.label" :name="item.key" :label-col="{ span: 6 }">
             <component :is="item.render" v-if="item.render" />
             <template v-else>
               <a-input v-if="item.type === 'input'" v-model:value="searchParams[item.key]" placeholder="请输入" allow-clear v-bind="item.attrs" />
               <a-select v-if="item.type === 'select'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
-              <!--              <a-cascader v-if="item.type === 'cascader'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />-->
               <super-cascader v-if="item.type === 'cascader'" v-model="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
-              <a-date-picker v-if="item.type === 'date'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
-              <a-range-picker v-if="item.type === 'date-range'" v-model:value="searchParams[item.key]" allow-clear v-bind="item.attrs" />
-              <a-date-picker v-if="item.type === 'time'" v-model:value="searchParams[item.key]" show-time placeholder="请选择" allow-clear v-bind="item.attrs" />
-              <a-range-picker v-if="item.type === 'time-range'" v-model:value="searchParams[item.key]" show-time allow-clear v-bind="item.attrs" />
+              <a-date-picker v-if="item.type === 'date'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear value-format="YYYY-MM-DD" v-bind="item.attrs" />
+              <a-range-picker v-if="item.type === 'date-range'" v-model:value="searchParams[item.key]" allow-clear value-format="YYYY-MM-DD" v-bind="item.attrs" />
+              <a-date-picker v-if="item.type === 'time'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear show-time value-format="YYYY-MM-DD HH:mm:ss" v-bind="item.attrs" />
+              <a-range-picker v-if="item.type === 'time-range'" v-model:value="searchParams[item.key]" allow-clear show-time value-format="YYYY-MM-DD HH:mm:ss" v-bind="item.attrs" />
             </template>
           </a-form-item>
         </template>
@@ -22,6 +21,11 @@
         <a-space size="small">
           <a-button type="primary" @click="handleSearch">{{ searchConfig?.searchText || '查询' }}</a-button>
           <a-button type="default" @click="handleReset">{{ searchConfig?.resetText || '重置' }}</a-button>
+          <a type="link" v-if="searchColumns.length > formWidth / 400" @click="toggleExpandVisible">
+            <span>{{ expandVisible ? '合并' : '展开' }}</span>
+            <UpOutlined v-if="expandVisible" />
+            <DownOutlined v-else />
+          </a>
         </a-space>
       </div>
     </div>
@@ -35,18 +39,18 @@
         <a-tooltip title="刷新" :color="token.colorPrimary">
           <a-button shape="circle" :icon="h(ReloadOutlined)" :disabled="loading" @click="handleReload" />
         </a-tooltip>
-        <a-tooltip title="导出" :color="token.colorPrimary">
-          <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" v-if="showExport" @click="handleExport" />
+        <a-tooltip title="导出" :color="token.colorPrimary" v-if="showExport">
+          <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" @click="handleExport" />
         </a-tooltip>
         <a-tooltip title="列配置" :color="token.colorPrimary">
           <a-button shape="circle" :icon="h(MenuOutlined)" />
         </a-tooltip>
-        <a-tooltip title="搜索开关" :color="token.colorPrimary">
+        <a-tooltip :title="formVisible ? '隐藏搜索' : '展示搜索'" :color="token.colorPrimary" v-if="searchColumns?.length" @click="toggleFormVisible">
           <a-button shape="circle" :icon="h(SearchOutlined)" />
         </a-tooltip>
       </a-space>
     </div>
-    <div class="super-table__table">
+    <div class="super-table__table" ref="tableBoxRef">
       <a-table
         ref="tableRef"
         v-bind="$attrs"
@@ -56,7 +60,7 @@
         :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
         :row-selection="selection"
         :row-class-name="getRowClassConfig"
-        :scroll="getScrollConfig"
+        :scroll="{ ...getScrollConfig, y: yHeight }"
         @change="handleChange"
       >
         <template #headerCell="{ text, record, index, column }">
@@ -71,11 +75,12 @@
 </template>
 
 <script lang="ts" setup name="SuperTable">
-  import { ref, onBeforeMount, h } from 'vue';
+  import { ref, onBeforeMount, h, computed, nextTick } from 'vue';
   import { theme } from 'ant-design-vue';
-  import { SearchOutlined, ReloadOutlined, MenuOutlined, ExportOutlined } from '@ant-design/icons-vue';
+  import { SearchOutlined, ReloadOutlined, MenuOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
   import { SuperTableProps, SuperTableEmit } from './index';
   import { useTableRequest } from './hooks.ts';
+  import { useElementSize, useWindowSize, watchDebounced } from '@vueuse/core';
 
   const emits = defineEmits<SuperTableEmit>();
 
@@ -86,16 +91,54 @@
     showUtil: true,
     showExport: true,
     searchParams: () => ({}),
+    searchColumns: () => [],
   });
 
-  const { loading, dataSource, pagination, selectedRowKeys, selectedRows, handleRequest, handlePagination, handleSearch, handleReset, handleReload, getRowClassConfig, getScrollConfig, selection } =
-    useTableRequest(props, emits);
+  const {
+    loading,
+    expandVisible,
+    formVisible,
+    dataSource,
+    pagination,
+    selectedRowKeys,
+    selectedRows,
+    toggleExpandVisible,
+    toggleFormVisible,
+    handleRequest,
+    handlePagination,
+    handleSearch,
+    handleReset,
+    handleReload,
+    getRowClassConfig,
+    getScrollConfig,
+    selection,
+  } = useTableRequest(props, emits);
 
   const { token } = theme.useToken();
-  console.log(token);
 
   const formRef = ref();
   const tableRef = ref();
+  const tableBoxRef = ref();
+
+  const yHeight = ref<number>(500);
+
+  const { height: windowHeight } = useWindowSize();
+  const { width: formWidth } = useElementSize(formRef);
+  const { height: tableHeight } = useElementSize(tableBoxRef);
+  const setYheight = () => {
+    // yHeight.value = 0;
+    nextTick(() => {
+      // yHeight.value = tableHeight.value - 115;
+    });
+  };
+
+  watchDebounced(
+    () => windowHeight.value,
+    () => {
+      setYheight();
+    },
+    { debounce: 300, maxWait: 500, immediate: true, deep: true },
+  );
 
   onBeforeMount(() => {
     handleRequest();
@@ -112,7 +155,21 @@
     console.log('super-table export handle');
   };
 
-  defineExpose({ formRef, tableRef, selectedRowKeys, selectedRows });
+  // expose
+  defineExpose({
+    formRef,
+    tableRef,
+    selectedRowKeys: computed(() => selectedRowKeys.value),
+    selectedRows: computed(() => selectedRows.value),
+    setSelectedRowKeys: (keys: (string | number)[]) => {
+      selectedRowKeys.value = keys;
+      selectedRows.value = dataSource.value.filter((item: any) => keys.includes(item[props.rowKey]));
+    },
+    search: handleSearch,
+    reset: handleReset,
+    reload: handleReload,
+    export: handleExport,
+  });
 </script>
 
 <style lang="less" scoped>

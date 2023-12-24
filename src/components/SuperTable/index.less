@@ -17,17 +17,33 @@
 
 // form area of table
 .super-table__form {
+  display: flex;
+  margin-bottom: 10px;
+
   .ant-form {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
 
     .ant-form-item {
       width: 400px;
+      height: 60px;
+      margin-bottom: 0;
+      padding-top: 14px;
 
       .ant-picker {
         width: 100%;
       }
     }
+  }
+
+  &-submit {
+    padding: 0 12px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    user-select: none;
   }
 }
 
@@ -38,9 +54,14 @@
   padding: 0 12px;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 // table area of table
 .super-table__table {
-  flex: 1;
+  flex: auto;
+
+  :deep(.ant-pagination) {
+    padding-right: 12px;
+  }
 }

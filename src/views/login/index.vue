@@ -1,22 +1,19 @@
 <template>
-  <div>
+  <div class="full">
     <super-table
-      bordered
-      show-stripe
-      row-selection
       :show-util="true"
       :request="getUserList"
       :columns="columns"
       :search-params="searchParams"
       :search-columns="searchColumns"
-      :scroll="{}"
+      :format-params="handleFormatParams"
       @search="onSearch"
       @reset="onReset"
       @reload="onReload"
       @change="onChange"
     >
       <template #utilLeft>
-        <a-button>插槽按钮</a-button>
+        <a-button>slot button</a-button>
       </template>
       <template #utilRight>
         <a-button shape="circle">slot</a-button>
@@ -36,9 +33,21 @@
   import { TableColumnsType, SearchColumnsType } from '@/interface';
   import { getUserList, delUser } from '@/api';
 
-  const searchParams = reactive<any>({
-    cascader: ['1', '1-1'],
-  });
+  const searchParams = reactive<any>({});
+
+  const handleFormatParams = (val: any) => {
+    if (val.dateRange) {
+      val.createDate = val.dateRange[0];
+      val.endDate = val.dateRange[1];
+      val.dateRange = undefined;
+    }
+    if (val.timeRange) {
+      val.createTime = val.timeRange[0];
+      val.endTime = val.timeRange[1];
+      val.timeRange = undefined;
+    }
+    console.log('val', val);
+  };
 
   const searchColumns: SearchColumnsType = [
     {
@@ -71,6 +80,7 @@
       label: 'cascader',
       type: 'cascader',
       attrs: {
+        valueType: 'all',
         options: [
           {
             label: '一年级',
@@ -107,8 +117,8 @@
       type: 'time',
     },
     {
-      key: 'time-range',
-      label: 'time-range',
+      key: 'timeRange',
+      label: 'timeRange',
       type: 'time-range',
     },
   ];

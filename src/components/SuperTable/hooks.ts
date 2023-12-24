@@ -5,6 +5,12 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
   // loading status of table
   const loading = ref<boolean>(false);
 
+  // form expanded status
+  const expandVisible = ref<boolean>(false);
+
+  // form visible status
+  const formVisible = ref<boolean>(true);
+
   // source data of table
   const dataSource = ref<any[]>([]);
 
@@ -26,6 +32,16 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
     loading.value = val;
   };
 
+  // toggle expanded status
+  const toggleExpandVisible = (): void => {
+    expandVisible.value = !expandVisible.value;
+  };
+
+  // toggle form visible status
+  const toggleFormVisible = (): void => {
+    formVisible.value = !formVisible.value;
+  };
+
   // request api to retrieve table data
   const handleRequest = async (): Promise<void> => {
     if (!props.request) return;
@@ -34,14 +50,19 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
     emits('request', null);
     try {
       const { pageNum, pageSize } = pagination;
-      const result: ResDataType<any> = await props.request({ pageNum, pageSize, ...props.searchParams });
+      const params = { ...props.searchParams };
+      props.formatParams && props.formatParams(params);
+      for (const k in params) {
+        params[k] = params[k] === '' ? undefined : params[k];
+      }
+      const result: ResDataType<any> = await props.request({ pageNum, pageSize, ...params });
       console.log('请求结果', result);
       pagination.pageNum = result.pageNum;
       pagination.pageSize = result.pageSize;
       pagination.total = result.total;
       dataSource.value = result.list;
     } catch (error) {
-      console.log('SuperTable hooks request fail');
+      console.log('super-table hooks request fail', error);
     } finally {
       selectedRowKeys.value = [];
       selectedRows.value = [];
@@ -64,21 +85,24 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
 
   // handle table search
   const handleSearch = (): void => {
+    if (loading.value) return;
     emits('search', null);
-    !loading.value && handleRequest();
+    handleRequest();
   };
 
   // handle table reset
   const handleReset = (): void => {
+    if (loading.value) return;
     emits('reset', null);
     pagination.pageNum = 1;
-    !loading.value && handleRequest();
+    handleRequest();
   };
 
   // handle table reload
   const handleReload = (): void => {
+    if (loading.value) return;
     emits('reload', null);
-    !loading.value && handleRequest();
+    handleRequest();
   };
 
   // get row class name [stripe]
@@ -114,11 +138,15 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) =
 
   return {
     loading,
+    expandVisible,
+    formVisible,
     dataSource,
     pagination,
     selectedRowKeys,
     selectedRows,
     setLoading,
+    toggleExpandVisible,
+    toggleFormVisible,
     handleRequest,
     handlePagination,
     handleSearch,
