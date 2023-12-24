@@ -1,5 +1,5 @@
 import { User, ResListType } from '@/interface';
-import api from '@/api';
+import api from '@/api/http';
 
 // 获取用户列表
 export const getUserList = (params: User.ReqListType) => {

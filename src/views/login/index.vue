@@ -34,9 +34,8 @@
 <script lang="tsx" setup>
   import { ref, reactive } from 'vue';
   import { Image, Button, Tag, message, Input } from 'ant-design-vue';
-  import type { TableColumnsType } from 'ant-design-vue';
-  import type { SearchColumnsType } from '@/components/SuperTable';
-  import { getUserList, delUser } from '@/api/modules/user';
+  import { TableColumnsType, SearchColumnsType } from '@/interface';
+  import { getUserList, delUser } from '@/api';
 
   const test1 = ref(['1', '1-1']);
   // const test1 = ref('1-1');

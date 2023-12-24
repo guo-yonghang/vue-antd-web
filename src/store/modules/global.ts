@@ -1,16 +1,10 @@
 import { defineStore } from 'pinia';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
-
-interface GlobalStoreState {
-  token: string;
-  userInfo: {
-    [key: string]: string | number;
-  };
-}
+import { Store } from '@/interface';
 
 export const useGlobalStore = defineStore({
   id: 'vue-global',
-  state: (): GlobalStoreState => ({
+  state: (): Store.GlobalState => ({
     token: 'A3kmh2WjR2_FQFgEeTjJQ',
     userInfo: { name: '', age: 22 },
   }),

@@ -26,7 +26,6 @@
       } else {
         return emits('update:value', e[e.length - 1]);
       }
-      // emits('update:value', e);
     },
   });
 
