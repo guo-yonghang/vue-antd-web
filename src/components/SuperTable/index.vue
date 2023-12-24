@@ -8,7 +8,8 @@
             <template v-else>
               <a-input v-if="item.type === 'input'" v-model:value="searchParams[item.key]" placeholder="请输入" allow-clear v-bind="item.attrs" />
               <a-select v-if="item.type === 'select'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
-              <a-cascader v-if="item.type === 'cascader'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
+              <!--              <a-cascader v-if="item.type === 'cascader'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />-->
+              <super-cascader v-if="item.type === 'cascader'" v-model="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
               <a-date-picker v-if="item.type === 'date'" v-model:value="searchParams[item.key]" placeholder="请选择" allow-clear v-bind="item.attrs" />
               <a-range-picker v-if="item.type === 'date-range'" v-model:value="searchParams[item.key]" allow-clear v-bind="item.attrs" />
               <a-date-picker v-if="item.type === 'time'" v-model:value="searchParams[item.key]" show-time placeholder="请选择" allow-clear v-bind="item.attrs" />

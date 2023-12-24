@@ -1,7 +1,6 @@
 <template>
   <div>
-    <SuperCascader v-model:value="test1" :options="options1" placeholder="shab" />
-    <SuperTable
+    <super-table
       bordered
       show-stripe
       row-selection
@@ -27,39 +26,19 @@
           <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
         </template>
       </template>
-    </SuperTable>
+    </super-table>
   </div>
 </template>
 
 <script lang="tsx" setup>
-  import { ref, reactive } from 'vue';
+  import { reactive } from 'vue';
   import { Image, Button, Tag, message, Input } from 'ant-design-vue';
   import { TableColumnsType, SearchColumnsType } from '@/interface';
   import { getUserList, delUser } from '@/api';
 
-  const test1 = ref(['1', '1-1']);
-  // const test1 = ref('1-1');
-
-  const options1 = [
-    {
-      label: '一年级',
-      value: '1',
-      children: [
-        { label: '一班', value: '1-1' },
-        { label: '二班', value: '1-2' },
-      ],
-    },
-    {
-      label: '二年级',
-      value: '2',
-      children: [
-        { label: '一班', value: '2-1' },
-        { label: '二班', value: '2-2' },
-      ],
-    },
-  ];
-
-  const searchParams = reactive<any>({});
+  const searchParams = reactive<any>({
+    cascader: ['1', '1-1'],
+  });
 
   const searchColumns: SearchColumnsType = [
     {

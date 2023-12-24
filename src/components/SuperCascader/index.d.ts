@@ -1,6 +1,3 @@
-// value type
-export type valueType = string | number | (string | number)[];
-
 // options item type
 export interface OptionsItemType {
   label: string;
@@ -13,11 +10,12 @@ export type OptionsListType = OptionsItemType[];
 
 // emits type
 export interface EmitsType {
-  (e: 'update:value', value: valueType): void;
+  (e: 'update:modelValue', value: any): void;
 }
 
 // props type
 export interface PropsType {
-  value: valueType;
+  modelValue?: any;
+  valueType?: 'single' | 'all';
   options?: OptionsListType;
 }
