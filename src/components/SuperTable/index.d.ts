@@ -11,11 +11,6 @@ export interface ResDataType<T> extends PaginationType {
   list: T[];
 }
 
-// type of request's params
-export interface SearchParamsType {
-  [key: string]: any;
-}
-
 // type of request's config
 export interface SearchConfigType extends Record<string, any> {
   searchText?: string;
@@ -41,11 +36,12 @@ export interface SuperTableProps {
   showPage?: boolean;
   showUtil?: boolean;
   showExport?: boolean;
-  searchParams?: SearchParamsType;
+  searchParams?: Record<string, any>;
   searchColumns?: SearchColumnsType;
   searchConfig?: SearchConfigType;
   rowSelection?: TableProps['rowSelection'];
   scroll?: TableProps['scroll'];
+  formatParams?: (params: any) => void;
 }
 
 // type of component's emits

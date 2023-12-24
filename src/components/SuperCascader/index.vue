@@ -26,10 +26,11 @@
 
   // set modelValue
   const setValue = (e: any[]) => {
-    if (Array.isArray(props.modelValue)) {
-      return emits('update:modelValue', e);
-    } else {
+    if (props.valueType === 'single') {
       return emits('update:modelValue', e[e.length - 1]);
+    }
+    if (props.valueType === 'all') {
+      return emits('update:modelValue', e);
     }
   };
 
