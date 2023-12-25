@@ -28,7 +28,7 @@ export const createVitePlugins = (): (PluginOption | PluginOption[])[] => {
     //使用自定义svg图标/assets/svgs目录下
     createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), 'src/assets/svgs')],
-      symbolId: 'icon-[dir]-[name]',
+      symbolId: 'svg-[dir]-[name]',
     }),
   ];
 };

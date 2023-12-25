@@ -8,7 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AButton: typeof import('ant-design-vue/es')['Button']
-    ACard: typeof import('ant-design-vue/es')['Card']
+    ACard: (typeof import('ant-design-vue/es'))['Card']
     ACascader: typeof import('ant-design-vue/es')['Cascader']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     ADatePicker: typeof import('ant-design-vue/es')['DatePicker']
@@ -23,7 +23,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SuperCascader: typeof import('./src/components/SuperCascader/index.vue')['default']
+    SuperIcon: typeof import('./src/components/SuperIcon/index.vue')['default']
     SuperTable: typeof import('./src/components/SuperTable/index.vue')['default']
-    SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
   }
 }
