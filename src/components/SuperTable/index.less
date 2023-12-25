@@ -61,6 +61,10 @@
 .super-table__table {
   flex: auto;
 
+  :deep(.ant-table-body) {
+    transition: height 200ms;
+  }
+
   :deep(.ant-pagination) {
     padding-right: 12px;
   }
