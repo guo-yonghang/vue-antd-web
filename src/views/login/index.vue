@@ -1,37 +1,42 @@
 <template>
-  <div class="full">
-    <super-table
-      :show-util="true"
-      :request="getUserList"
-      :columns="columns"
-      :search-params="searchParams"
-      :search-columns="searchColumns"
-      :format-params="handleFormatParams"
-      @search="onSearch"
-      @reset="onReset"
-      @reload="onReload"
-      @change="onChange"
-    >
-      <template #utilLeft>
-        <a-button>slot button</a-button>
+  <super-table
+    ref="superTableRef"
+    row-selection
+    :show-util="true"
+    :request="getUserList"
+    :columns="columns"
+    :search-params="searchParams"
+    :search-columns="searchColumns"
+    :format-params="handleFormatParams"
+    @search="onSearch"
+    @reset="onReset"
+    @reload="onReload"
+    @change="onChange"
+  >
+    <template #utilLeft>
+      <a-button @click="handleSlotButton">slot button</a-button>
+    </template>
+    <template #utilRight>
+      <a-button shape="circle">slot</a-button>
+    </template>
+    <template #bodyCell="{ column, record }">
+      <template v-if="column.key === 'action'">
+        <a-button type="link" danger :disabled="loading" @click="handleDelUser(record.id)">删除</a-button>
       </template>
-      <template #utilRight>
-        <a-button shape="circle">slot</a-button>
-      </template>
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <a-button type="link" danger @click="handleDelUser(record.id)">删除</a-button>
-        </template>
-      </template>
-    </super-table>
-  </div>
+    </template>
+  </super-table>
 </template>
 
 <script lang="tsx" setup>
-  import { reactive } from 'vue';
+  import { ref, reactive } from 'vue';
   import { Image, Button, Tag, message, Input } from 'ant-design-vue';
   import { TableColumnsType, SearchColumnsType } from '@/interface';
+  import { useLoading } from '@/hooks';
   import { getUserList, delUser } from '@/api';
+
+  const { loading, setLoading } = useLoading();
+
+  const superTableRef = ref<any>(null);
 
   const searchParams = reactive<any>({});
 
@@ -46,7 +51,6 @@
       val.endTime = val.timeRange[1];
       val.timeRange = undefined;
     }
-    console.log('val', val);
   };
 
   const searchColumns: SearchColumnsType = [
@@ -56,8 +60,8 @@
       type: 'input',
     },
     {
-      key: 'render',
-      label: 'render',
+      key: 'inputRender',
+      label: 'inputRender',
       type: 'input',
       render: () => {
         return <Input v-model:value={searchParams.render} placeholder="请输入" />;
@@ -277,10 +281,22 @@
     console.log('表格change', e);
   };
 
-  const handleDelUser = (id: string) => {
-    delUser(id).then(() => {
+  const handleDelUser = async (id: string) => {
+    setLoading(true);
+    try {
+      await delUser(id);
       message.success('已删除');
-    });
+      // 直接设置false是因为super-table自带加载状态
+      setLoading(false);
+      superTableRef.value.reload();
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const handleSlotButton = () => {
+    const content = JSON.stringify(superTableRef.value.selectedRowKeys);
+    message.success(`选中row-keys${content}`);
   };
 </script>
 

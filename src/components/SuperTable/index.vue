@@ -42,9 +42,6 @@
         <a-tooltip title="导出" :color="token.colorPrimary" v-if="showExport">
           <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" @click="handleExport" />
         </a-tooltip>
-        <a-tooltip title="列配置" :color="token.colorPrimary">
-          <a-button shape="circle" :icon="h(MenuOutlined)" />
-        </a-tooltip>
         <a-tooltip :title="formVisible ? '隐藏搜索' : '展示搜索'" :color="token.colorPrimary" v-if="searchColumns?.length" @click="toggleFormVisible">
           <a-button shape="circle" :icon="h(SearchOutlined)" />
         </a-tooltip>
@@ -75,12 +72,12 @@
 </template>
 
 <script lang="ts" setup name="SuperTable">
-  import { ref, onBeforeMount, h, computed, nextTick } from 'vue';
+  import { ref, onBeforeMount, h, computed } from 'vue';
   import { theme } from 'ant-design-vue';
-  import { SearchOutlined, ReloadOutlined, MenuOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
+  import { SearchOutlined, ReloadOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
   import { SuperTableProps, SuperTableEmit } from './index';
   import { useTableRequest } from './hooks.ts';
-  import { useElementSize, useWindowSize, watchDebounced } from '@vueuse/core';
+  import { useElementSize, useWindowSize, watchDebounced, useElementVisibility } from '@vueuse/core';
 
   const emits = defineEmits<SuperTableEmit>();
 
@@ -116,24 +113,29 @@
 
   const { token } = theme.useToken();
 
-  const formRef = ref();
-  const tableRef = ref();
-  const tableBoxRef = ref();
+  const formRef = ref(null);
+  const tableRef = ref(null);
+  const tableBoxRef = ref(null);
 
   const yHeight = ref<number>(500);
 
   const { height: windowHeight } = useWindowSize();
   const { width: formWidth } = useElementSize(formRef);
   const { height: tableHeight } = useElementSize(tableBoxRef);
-  const setYheight = () => {
-    // yHeight.value = 0;
-    nextTick(() => {
-      // yHeight.value = tableHeight.value - 115;
-    });
+  const tableVisible = useElementVisibility(tableBoxRef);
+
+  // set table y height
+  const setYheight = async () => {
+    if (!tableVisible.value) return;
+    yHeight.value = 0;
+    setTimeout(() => {
+      yHeight.value = tableHeight.value - 119;
+    }, 10);
   };
 
+  // watch window height set table y height
   watchDebounced(
-    () => windowHeight.value,
+    () => [windowHeight.value, expandVisible.value, formVisible.value],
     () => {
       setYheight();
     },
