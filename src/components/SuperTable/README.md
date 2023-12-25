@@ -1,6 +1,6 @@
 # SuperTable
 
-```
+```text
 author:guo-yonghang
 create:2023-12-21 13:00:00
 ```
@@ -12,5 +12,3 @@ create:2023-12-21 13:00:00
 ```text
 暂时移除文档，功能开发完补充
 ```
-
-

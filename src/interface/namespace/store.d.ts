@@ -1,11 +1,13 @@
+import type { RouteRecordRaw } from 'vue-router';
+
 // store namespace
 export namespace Store {
   // global state type
   export interface GlobalState {
     token: string;
-    userInfo: {
-      [key: string]: string | number;
-    };
+    userInfo: Record<string, any>;
+    layoutRoute: RouteRecordRaw | null;
+    homeName: string;
   }
 
   // setting state type
