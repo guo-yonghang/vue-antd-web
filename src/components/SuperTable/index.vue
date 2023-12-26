@@ -52,7 +52,7 @@
         ref="tableRef"
         v-bind="$attrs"
         :row-key="rowKey"
-        :loading="loading"
+        :loading="loading || resizing"
         :dataSource="dataSource"
         :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
         :row-selection="selection"
@@ -72,12 +72,12 @@
 </template>
 
 <script lang="ts" setup name="SuperTable">
-  import { ref, onBeforeMount, h, computed } from 'vue';
-  import { theme } from 'ant-design-vue';
+  import { ref, computed, watch, onBeforeMount, h } from 'vue';
+  import { message, theme } from 'ant-design-vue';
   import { SearchOutlined, ReloadOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
   import { SuperTableProps, SuperTableEmit } from './index';
   import { useTableRequest } from './hooks.ts';
-  import { useElementSize, useWindowSize, watchDebounced, useElementVisibility } from '@vueuse/core';
+  import { useElementSize, useWindowSize, useElementVisibility } from '@vueuse/core';
 
   const emits = defineEmits<SuperTableEmit>();
 
@@ -116,8 +116,9 @@
   const formRef = ref(null);
   const tableRef = ref(null);
   const tableBoxRef = ref(null);
+  const resizing = ref(false);
 
-  const yHeight = ref<number>(500);
+  const yHeight = ref<number | string>('auto');
 
   const { height: windowHeight } = useWindowSize();
   const { width: formWidth } = useElementSize(formRef);
@@ -127,19 +128,21 @@
   // set table y height
   const setYheight = async () => {
     if (!tableVisible.value) return;
+    resizing.value = true;
     yHeight.value = 0;
     setTimeout(() => {
       yHeight.value = tableHeight.value - 119;
-    }, 10);
+      resizing.value = false;
+    }, 200);
   };
 
   // watch window height set table y height
-  watchDebounced(
-    () => [windowHeight.value, expandVisible.value, formVisible.value],
+  watch(
+    () => [windowHeight.value, expandVisible.value, formVisible.value, tableVisible.value],
     () => {
       setYheight();
     },
-    { debounce: 300, maxWait: 500, immediate: true, deep: true },
+    { immediate: true },
   );
 
   onBeforeMount(() => {
@@ -154,7 +157,7 @@
 
   // super-table export handle
   const handleExport = () => {
-    console.log('super-table export handle');
+    message.warning('导出功能暂未开放');
   };
 
   // expose
