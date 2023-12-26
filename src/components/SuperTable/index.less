@@ -11,6 +11,7 @@
 .super-table {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -25,12 +26,14 @@
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
+    transition: all 300ms;
 
     .ant-form-item {
       width: 400px;
       height: 60px;
       margin-bottom: 0;
       padding-top: 14px;
+      white-space: nowrap;
 
       .ant-picker {
         width: 100%;
@@ -39,7 +42,7 @@
   }
 
   &-submit {
-    padding: 0 12px;
+    margin-left: 12px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -51,7 +54,6 @@
 .super-table__util {
   width: 100%;
   height: 56px;
-  padding: 0 12px;
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
@@ -60,10 +62,6 @@
 // table area of table
 .super-table__table {
   flex: auto;
-
-  :deep(.ant-table-body) {
-    transition: height 200ms;
-  }
 
   :deep(.ant-pagination) {
     padding-right: 12px;
