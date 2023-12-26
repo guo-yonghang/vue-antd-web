@@ -12,7 +12,7 @@ export namespace Store {
 
   // setting state type
   export interface SettingState {
-    isCollapse: boolean;
+    collapsed: boolean;
     language: 'zh' | 'en';
     isDark: boolean;
     showTabs: boolean;

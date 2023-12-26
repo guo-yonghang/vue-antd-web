@@ -10,7 +10,7 @@
 
   interface SvgProps {
     name: string;
-    type?: string;
+    type?: 'svg' | 'antd';
     size?: number | string;
     iconStyle?: CSSProperties;
   }
