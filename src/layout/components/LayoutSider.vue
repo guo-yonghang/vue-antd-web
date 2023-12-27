@@ -38,6 +38,7 @@
 
   // format menu-list
   const getMenuList = (list: any[]): AntMenuItemType[] => {
+    list = list.filter((i) => i.meta.visible);
     if (!list.length) return [];
     return list.map((item) => {
       const titleKey = settingStore.language === 'zh' ? 'title' : 'enTitle';
@@ -45,7 +46,7 @@
         key: item.path,
         title: item.meta[titleKey],
         label: item.meta[titleKey],
-        icon: getIconContext(item.meta.icon),
+        icon: getIconContext(item.meta.icon || ''),
       };
       if (item.children?.length) {
         (result.children as any[]) = getMenuList(item.children);
@@ -56,10 +57,15 @@
 
   // get icon context
   const getIconContext = (icon: string) => {
+    if (!icon) return <span></span>;
     if (isHttp(icon)) {
-      return <img src={icon} style="width:28px;height:28px;" />;
+      return <img src={icon} style="width:16px;height:16px;" />;
     }
-    return <super-icon name={icon} type={icon.includes('icon-') ? 'svg' : 'antd'} size="28" />;
+    return (
+      <span>
+        <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="16" iconStyle={{ fontSize: '16px' }} />
+      </span>
+    );
   };
 
   // handle open change

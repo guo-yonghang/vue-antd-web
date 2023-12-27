@@ -1,11 +1,13 @@
+import { markRaw } from 'vue';
 import { defineStore } from 'pinia';
+import type { RouteRecordRaw } from 'vue-router';
 import { PersistedStateOptions } from 'pinia-plugin-persistedstate';
 import { Store, MenuItemType } from '@/interface';
-import type { RouteRecordRaw } from 'vue-router';
-import { markRaw } from 'vue';
+import { resultRoutes } from '@/constants';
 import router from '@/router';
 import Layout from '@/layout/index.vue';
-import menuList from '@/assets/menu-list.ts';
+// 模拟的路由列表
+import mockMenuList from '@/assets/menu-list.ts';
 
 export const useGlobalStore = defineStore({
   id: 'vue-global',
@@ -19,13 +21,13 @@ export const useGlobalStore = defineStore({
   actions: {
     initLayoutRoute() {
       // const { menuList } = this.userInfo;
-      this.homeName = findHomeRouteName(menuList);
+      this.homeName = findHomeRouteName(mockMenuList);
       this.layoutRoute = {
         path: '/layout',
         name: 'layout',
         component: markRaw(Layout),
         redirect: this.homeName,
-        children: formatRouteData(menuList),
+        children: formatRouteData(mockMenuList).concat(resultRoutes),
       };
       router.addRoute(this.layoutRoute);
     },
