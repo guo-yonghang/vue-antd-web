@@ -12,3 +12,11 @@ export interface MenuItemType {
   type: number;
   children?: MenuItemType[];
 }
+
+export interface AntMenuItemType {
+  key: string;
+  label: string;
+  title: string;
+  icon?: JSX.Element;
+  children?: AntMenuItemType[];
+}

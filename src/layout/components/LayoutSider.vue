@@ -2,17 +2,82 @@
   <div class="flxc" style="height: 50px">
     <img src="@/assets/vue.svg" style="width: 32px" />
   </div>
-  Sider
+  <a-menu
+    theme="dark"
+    mode="inline"
+    :openKeys="state.openKeys"
+    :selectedKeys="state.selectedKeys"
+    :inline-collapsed="false"
+    :items="menuList"
+    @openChange="handleOpenChange"
+    @click="handleClickItem"
+  ></a-menu>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="tsx" setup>
+  import { reactive, computed } from 'vue';
+  import { useGlobalStore, useSettingStore } from '@/store';
+  import { AntMenuItemType } from '@/interface';
+  import { isHttp } from '@/utils';
 
-<style lang="less" scoped>
-  .logo {
-    height: 50px;
+  const globalStore = useGlobalStore();
+  const settingStore = useSettingStore();
 
-    img {
-      width: 32px;
+  const state = reactive({
+    collapsed: false,
+    openKeys: ['/table'],
+    selectedKeys: ['/table', '/table/pro-table'],
+  });
+
+  const menuList = computed(() => {
+    console.log(globalStore.layoutRoute?.children);
+    const result = getMenuList(globalStore.layoutRoute?.children || []);
+    console.log(result);
+    return result;
+  });
+
+  // format menu-list
+  const getMenuList = (list: any[]): AntMenuItemType[] => {
+    list = list.filter((i) => i.meta.visible);
+    if (!list.length) return [];
+    return list.map((item) => {
+      const titleKey = settingStore.language === 'zh' ? 'title' : 'enTitle';
+      const result: AntMenuItemType = {
+        key: item.path,
+        title: item.meta[titleKey],
+        label: item.meta[titleKey],
+        icon: getIconContext(item.meta.icon || ''),
+      };
+      if (item.children?.length) {
+        (result.children as any[]) = getMenuList(item.children);
+      }
+      return result;
+    });
+  };
+
+  // get icon context
+  const getIconContext = (icon: string) => {
+    if (!icon) return <span></span>;
+    if (isHttp(icon)) {
+      return <img src={icon} style="width:16px;height:16px;" />;
     }
-  }
-</style>
+    return (
+      <span>
+        <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="16" iconStyle={{ fontSize: '16px' }} />
+      </span>
+    );
+  };
+
+  // handle open change
+  const handleOpenChange = (openKeys: (string | number)[]) => {
+    console.log('openKeys', openKeys);
+  };
+
+  const handleClickItem = ({ item, key, keyPath }: any) => {
+    console.log('item', item);
+    console.log('key', key);
+    console.log('keyPath', keyPath);
+  };
+</script>
+
+<style lang="less" scoped></style>

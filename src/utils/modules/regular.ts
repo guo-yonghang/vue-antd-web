@@ -12,3 +12,8 @@ export function isEmail(email: string): boolean {
 export function isMoney(money: string | number): boolean {
   return /^\d+(\.\d{1,2})?$/.test(String(money));
 }
+
+// 校验http-https的链接
+export function isHttp(url: string): boolean {
+  return /^(https?:\/\/)/.test(url);
+}
