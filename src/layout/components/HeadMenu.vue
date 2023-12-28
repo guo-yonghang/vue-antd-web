@@ -1,11 +1,10 @@
 <template>
   <a-space>
-    <a-button shape="circle">
-      <super-icon name="SoundOutlined" />
-    </a-button>
-    <a-button shape="circle" href="https://github.com/guo-yonghang/vue-study" target="_blank">
-      <super-icon name="GithubOutlined" />
-    </a-button>
+    <a-badge :count="5">
+      <a-button shape="circle">
+        <super-icon name="SoundOutlined" />
+      </a-button>
+    </a-badge>
     <a-button shape="circle">
       <super-icon name="SettingOutlined" />
     </a-button>

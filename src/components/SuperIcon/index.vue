@@ -1,12 +1,13 @@
 <template>
   <svg :style="styles" aria-hidden="true" v-if="type === 'svg'">
-    <use :xlink:href="symbolId" />
+    <use :xlink:href="context" />
   </svg>
-  <component :is="name" :style="styles" v-bind="$attrs" v-if="type === 'antd'"></component>
+  <component :is="context" :style="styles" v-bind="$attrs" v-if="type === 'antd'"></component>
 </template>
 
 <script setup lang="tsx" name="SuperIcon">
   import { computed, CSSProperties } from 'vue';
+  import * as Icons from '@ant-design/icons-vue';
 
   interface SvgProps {
     name: string;
@@ -17,19 +18,26 @@
 
   const props = withDefaults(defineProps<SvgProps>(), {
     type: 'antd',
-    iconStyle: () => ({ width: '20px', height: '20px' }),
+    size: 20,
+    iconStyle: () => ({}),
   });
 
-  // super-icon's sybolId
-  const symbolId = computed(() => `#${props.name}`);
+  const context = computed(() => {
+    if (props.type === 'svg') {
+      return `#${props.name}`;
+    }
+    if (props.type === 'antd') {
+      return (Icons as Record<string, any>)[props.name];
+    }
+    return null;
+  });
 
-  // super-icon's style
   const styles = computed(() => {
-    if (!props.size) return props.iconStyle;
     return {
-      ...props.iconStyle,
       width: props.size + 'px',
       height: props.size + 'px',
+      fontSize: props.size + 'px',
+      ...props.iconStyle,
     };
   });
 </script>
