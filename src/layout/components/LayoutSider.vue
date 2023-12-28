@@ -2,7 +2,7 @@
   <div class="flxc" style="height: 60px">
     <img src="@/assets/vue.svg" style="width: 32px" alt="logo" />
   </div>
-  <a-menu theme="dark" mode="inline" :open-keys="openKeys" :selected-keys="selectedKeys" :inline-collapsed="false" :items="menuItems" @click="handleClickItem"></a-menu>
+  <a-menu theme="dark" mode="inline" v-model:open-keys="openKeys" :selected-keys="selectedKeys" :inline-collapsed="false" :items="menuItems" @click="handleClickItem"></a-menu>
 </template>
 
 <script lang="tsx" setup>
@@ -18,12 +18,11 @@
   const settingStore = useSettingStore();
 
   const menuItems = ref<AntMenuItemType[]>([]);
+  const openKeys = ref<(string | number)[]>([]);
 
-  // 展开的目录key数组<通过处理只展开一个>
-  const openKeys = computed(() => {
-    const { matched, path } = route;
-    return matched.filter((i) => i.path !== '/layout' && i.path !== path).map((i) => i.path);
-  });
+  // 初始化openKeys
+  const { matched, path } = route;
+  openKeys.value = matched.filter((i) => i.path !== '/layout' && i.path !== path).map((i) => i.path);
 
   // 选中的菜单key数组<只能处理只选中一个>
   const selectedKeys = computed(() => {
@@ -40,7 +39,6 @@
       const result: AntMenuItemType = {
         type: undefined,
         key,
-        // title: item.meta[titleKey],
         label: item.meta[titleKey],
         icon: getIconContext(item.meta.icon || ''),
       };
