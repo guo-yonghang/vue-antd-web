@@ -56,7 +56,7 @@
     if (isHttp(icon)) {
       return <img src={icon} style="width:16px;height:16px;" alt="menu-icon" />;
     }
-    return <span>{icon && <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="16" iconStyle={{ fontSize: '16px' }} />}</span>;
+    return <span>{icon && <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="16" />}</span>;
   };
 
   // 监听自定义路由表处理menu数据
