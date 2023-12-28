@@ -28,11 +28,18 @@
 
   .fade-leave-active,
   .fade-enter-active {
-    transition: opacity 280ms cubic-bezier(0.38, 0, 0.24, 1);
+    transition: all 0.2s;
   }
 
-  .fade-enter,
+  .fade-enter-from {
+    opacity: 0;
+    transition: all 0.2s;
+    transform: translateX(-30px);
+  }
+
   .fade-leave-to {
     opacity: 0;
+    transition: all 0.2s;
+    transform: translateX(30px);
   }
 </style>
