@@ -14,9 +14,10 @@ export interface MenuItemType {
 }
 
 export interface AntMenuItemType {
+  type?: string | undefined;
   key: string;
   label: string;
-  title: string;
+  title?: string;
   icon?: JSX.Element;
   children?: AntMenuItemType[];
 }

@@ -1,8 +1,8 @@
 <template>
   <a-layout class="full">
-    <a-layout-sider v-model:collapsed="collapsed" theme="dark" collapsible>
+    <a-layout-sider v-model:collapsed="settingStore.collapsed" theme="dark" :collapsed-width="60" collapsible>
       <template #trigger>
-        <menu-unfold-outlined v-if="collapsed" class="trigger" />
+        <menu-unfold-outlined v-if="settingStore.collapsed" class="trigger" />
         <menu-fold-outlined v-else class="trigger" />
       </template>
       <layout-sider />
@@ -19,20 +19,20 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
   import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
+  import { useSettingStore } from '@/store';
   import LayoutHeader from '@/layout/components/LayoutHeader.vue';
   import LayoutSider from '@/layout/components/LayoutSider.vue';
   import LayoutContent from '@/layout/components/LayoutContent.vue';
 
-  const collapsed = ref<boolean>(false);
+  const settingStore = useSettingStore();
 </script>
 
 <style lang="less">
   .ant-layout-header {
     background-color: #ffffff !important;
     padding: 0 24px !important;
-    height: 50px !important;
+    height: 60px !important;
     display: flex;
     justify-content: space-between;
     align-items: center;

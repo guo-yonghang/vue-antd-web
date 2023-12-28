@@ -44,7 +44,10 @@ const formatRouteData = (list: MenuItemType[], parentPath: string = ''): RouteRe
   list.sort((prev, next) => {
     return prev.idx - next.idx;
   });
-  const pageModules = import.meta.glob('../../views/*/*.vue');
+  const pageModules = {
+    ...import.meta.glob('../../views/*.vue'),
+    ...import.meta.glob('../../views/*/*.vue'),
+  };
   const routes: RouteRecordRaw[] = [];
   list.forEach((item) => {
     const currentPath = `${parentPath}${parentPath ? '/' : ''}${item.path}`;
