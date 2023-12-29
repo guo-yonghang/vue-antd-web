@@ -15,8 +15,10 @@ export namespace Store {
     collapsed: boolean;
     language: 'zh' | 'en';
     isDark: boolean;
+    showHeader: boolean;
     showTabs: boolean;
     showTags: boolean;
     primary: string;
+    radius: number;
   }
 }

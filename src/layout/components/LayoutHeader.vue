@@ -1,10 +1,10 @@
 <template>
   <span>ToolBar</span>
-  <head-menu />
+  <header-menu />
 </template>
 
 <script lang="ts" setup>
-  import HeadMenu from '@/layout/components/HeadMenu.vue';
+  import HeaderMenu from '@/layout/components/HeaderMenu.vue';
 </script>
 
 <style lang="less" scoped></style>
