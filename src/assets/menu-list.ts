@@ -46,7 +46,7 @@ export default [
     id: '2',
     title: '客服聊天',
     enTitle: 'ServiceChat',
-    path: '/chat',
+    path: '/chat/index',
     permission: 'chat:root',
     icon: 'svg-config',
     visible: true,

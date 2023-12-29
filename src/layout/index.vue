@@ -8,7 +8,7 @@
       <layout-sider />
     </a-layout-sider>
     <a-layout>
-      <a-layout-header>
+      <a-layout-header v-if="settingStore.showHeader">
         <layout-header />
       </a-layout-header>
       <a-layout-content class="full">
@@ -28,7 +28,7 @@
   const settingStore = useSettingStore();
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .ant-layout-header {
     background-color: #ffffff !important;
     padding: 0 24px !important;
@@ -44,9 +44,9 @@
 
   .trigger {
     font-size: 18px;
-  }
 
-  .trigger:hover {
-    color: #1890ff;
+    &:hover {
+      color: var(--primary-color);
+    }
   }
 </style>

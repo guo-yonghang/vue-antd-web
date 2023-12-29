@@ -1,6 +1,6 @@
 <template>
   <a-layout class="full">
-    <tab-menu />
+    <tabs-menu />
     <a-layout-content>
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-  import TabMenu from '@/layout/components/TabMenu.vue';
+  import TabsMenu from '@/layout/components/TabsMenu.vue';
 
   const keepAliveList: string[] = [];
 </script>
