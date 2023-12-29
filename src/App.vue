@@ -21,11 +21,12 @@
 
   const theme = computed(() => {
     const { primary, radius } = settingStore;
-    document.body.style.setProperty('--color', primary);
+    document.body.style.setProperty('--primary', primary);
     document.body.style.setProperty('--radius', radius + 'px');
     return {
       token: {
         colorPrimary: primary,
+        colorLink: primary,
         borderRadius: radius + 'px',
       },
     };

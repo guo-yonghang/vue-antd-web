@@ -14,7 +14,8 @@ export namespace Store {
   export interface SettingState {
     collapsed: boolean;
     language: 'zh' | 'en';
-    isDark: boolean;
+    themeMode: 'light' | 'dark';
+    menuMode: 'light' | 'dark';
     showHeader: boolean;
     showTabs: boolean;
     showTags: boolean;

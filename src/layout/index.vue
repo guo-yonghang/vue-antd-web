@@ -1,6 +1,6 @@
 <template>
   <a-layout class="full">
-    <a-layout-sider v-model:collapsed="settingStore.collapsed" theme="dark" :collapsed-width="60" collapsible>
+    <a-layout-sider v-model:collapsed="settingStore.collapsed" :theme="settingStore.menuMode" :collapsed-width="60" width="220px" collapsible>
       <template #trigger>
         <menu-unfold-outlined v-if="settingStore.collapsed" class="trigger" />
         <menu-fold-outlined v-else class="trigger" />
@@ -46,7 +46,7 @@
     font-size: 18px;
 
     &:hover {
-      color: var(--primary-color);
+      color: var(--primary);
     }
   }
 </style>

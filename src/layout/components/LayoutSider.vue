@@ -2,7 +2,7 @@
   <div class="flxc" style="height: 60px">
     <img src="@/assets/vue.svg" style="width: 32px" alt="logo" />
   </div>
-  <a-menu theme="dark" mode="inline" v-model:open-keys="openKeys" :selected-keys="selectedKeys" :inline-collapsed="false" :items="menuItems" @click="handleClickItem"></a-menu>
+  <a-menu :theme="settingStore.menuMode" mode="inline" v-model:open-keys="openKeys" :selected-keys="selectedKeys" :inline-collapsed="false" :items="menuItems" @click="handleClickItem"></a-menu>
 </template>
 
 <script lang="tsx" setup>
