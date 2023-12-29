@@ -81,7 +81,7 @@
 
 <style scoped lang="less">
   .list-wrapper {
-    max-height: 400px;
+    max-height: 500px;
     overflow-y: scroll;
   }
 </style>
