@@ -1,3 +1,5 @@
+import { JSX } from 'vue/jsx-runtime';
+
 export interface MenuItemType {
   id: string;
   title: string;
