@@ -15,6 +15,13 @@ npm run preview 预览打包
 npm run format 格式化代码
 ```
 
+#### 其他问题
+
+```text
+Tooltip组件箭头问题已提issues
+Vue3.4Modal销毁问题等待antdv更新
+```
+
 #### SuperTable
 
 [文档地址](https://github.com/guo-yonghang/vue-antd-web/tree/main/src/components/SuperTable)
