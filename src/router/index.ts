@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory, RouterOptions } from 'vue-router';
+import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router';
 import { useGlobalStore } from '@/store';
 import NProgress from 'nprogress';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: <RouterOptions['routes']>[
     {
       path: '/',

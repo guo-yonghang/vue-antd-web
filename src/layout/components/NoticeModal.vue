@@ -65,7 +65,7 @@
     },
     {
       title: '假如我年少有为不自卑',
-      content: '金钱地位，搏到了却好像退回。',
+      content: '金钱地位，搏到了却好想退回。',
       avatar: 'https://www.keaitupian.cn/cjpic/frombd/1/253/3835425342/1856991308.jpg',
     },
   ]);
