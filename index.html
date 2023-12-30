@@ -2,10 +2,10 @@
 <html lang="en" data-theme="light">
 
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>vue-study</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vue-antd-web</title>
 </head>
 <style>
     #app {
@@ -15,54 +15,54 @@
 </style>
 <body>
 <div id="app">
-    <style>
-        html,
-        body,
-        #app {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
+  <style>
+      html,
+      body,
+      #app {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+      }
 
-        .load-wrap {
-            width: 150px;
-            height: 150px;
-            border: 1px solid;
-            border-radius: 50%;
-            -webkit-animation: 2s ani_3 linear infinite;
-            animation: 1.5s ani_3 linear infinite;
-            position: relative;
-        }
+      .load-wrap {
+          width: 150px;
+          height: 150px;
+          border: 1px solid;
+          border-radius: 50%;
+          -webkit-animation: 2s ani_3 linear infinite;
+          animation: 1.5s ani_3 linear infinite;
+          position: relative;
+      }
 
-        .load-ani {
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            border-radius: 50%;
-            opacity: .8;
-        }
+      .load-ani {
+          width: 16px;
+          height: 16px;
+          position: absolute;
+          top: -8px;
+          left: 50%;
+          border-radius: 50%;
+          opacity: .8;
+      }
 
-        @keyframes ani_3 {
-            0% {
-                transform: rotate(0deg);
-            }
+      @keyframes ani_3 {
+          0% {
+              transform: rotate(0deg);
+          }
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-    <div class="load-wrap" style="border-color: #0052d9;">
-        <div class="load-ani" style="background-color: #0052d9;">
-        </div>
+          100% {
+              transform: rotate(360deg);
+          }
+      }
+  </style>
+  <div class="load-wrap" style="border-color: #0052d9;">
+    <div class="load-ani" style="background-color: #0052d9;">
     </div>
+  </div>
 </div>
 <script type="module" src="/src/main.ts"></script>
 </body>
