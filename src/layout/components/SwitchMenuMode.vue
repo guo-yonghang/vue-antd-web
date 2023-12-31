@@ -3,7 +3,7 @@
     <template v-for="item in menuModeList" :key="item.value">
       <a-tooltip :title="item.key">
         <div class="item" @click="handleMode(item)">
-          <super-icon :name="item.icon" type="svg" :iconStyle="{ width: '104px', height: '90px' }" />
+          <super-icon :name="item.icon" type="svg" :iconStyle="{ width: '78px', height: '67px' }" />
           <span class="checked" v-if="settingStore.menuMode === item.value">
             <super-icon name="CheckOutlined" type="antd" :size="30" />
           </span>
