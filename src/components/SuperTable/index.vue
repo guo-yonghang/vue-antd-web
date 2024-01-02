@@ -36,13 +36,13 @@
       </a-space>
       <a-space>
         <slot name="utilRight" />
-        <a-tooltip title="刷新" :color="token.colorPrimary">
+        <a-tooltip title="刷新">
           <a-button shape="circle" :icon="h(ReloadOutlined)" :disabled="loading" @click="handleReload" />
         </a-tooltip>
-        <a-tooltip title="导出" :color="token.colorPrimary" v-if="showExport">
+        <a-tooltip title="导出" v-if="showExport">
           <a-button shape="circle" :icon="h(ExportOutlined)" :disabled="!selectedRowKeys.length" @click="handleExport" />
         </a-tooltip>
-        <a-tooltip :title="formVisible ? '隐藏搜索' : '展示搜索'" :color="token.colorPrimary" v-if="searchColumns?.length" @click="toggleFormVisible">
+        <a-tooltip :title="formVisible ? '隐藏搜索' : '展示搜索'" v-if="searchColumns?.length" @click="toggleFormVisible">
           <a-button shape="circle" :icon="h(SearchOutlined)" />
         </a-tooltip>
       </a-space>
@@ -73,11 +73,12 @@
 
 <script lang="ts" setup name="SuperTable">
   import { ref, computed, watch, onBeforeMount, h } from 'vue';
-  import { message, theme } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { SearchOutlined, ReloadOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
   import { SuperTableProps, SuperTableEmit } from './index';
   import { useTableRequest } from './hooks.ts';
   import { useElementSize, useWindowSize, useElementVisibility } from '@vueuse/core';
+  import { useSettingStore } from '@/store';
 
   const emits = defineEmits<SuperTableEmit>();
 
@@ -111,7 +112,7 @@
     selection,
   } = useTableRequest(props, emits);
 
-  const { token } = theme.useToken();
+  const settingStore = useSettingStore();
 
   const formRef = ref(null);
   const tableRef = ref(null);
@@ -138,7 +139,7 @@
 
   // watch window height set table y height
   watch(
-    () => [windowHeight.value, expandVisible.value, formVisible.value, tableVisible.value],
+    () => [windowHeight.value, expandVisible.value, formVisible.value, tableVisible.value, settingStore.showHeader, settingStore.showTabs],
     () => {
       setYheight();
     },

@@ -1,6 +1,6 @@
 <template>
   <a-layout class="full">
-    <tabs-menu />
+    <tabs-menu v-if="settingStore.showTabs" />
     <a-layout-content>
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -14,7 +14,10 @@
 </template>
 
 <script lang="ts" setup>
+  import { useSettingStore } from '@/store';
   import TabsMenu from '@/layout/components/TabsMenu.vue';
+
+  const settingStore = useSettingStore();
 
   const keepAliveList: string[] = [];
 </script>

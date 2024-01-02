@@ -8,10 +8,10 @@ export const useSettingStore = defineStore({
     collapsed: false,
     language: 'zh',
     themeMode: 'light',
-    menuMode: 'dark',
+    menuMode: 'light',
     showHeader: true,
     showTabs: true,
-    showTags: true,
+    showBreadcrumb: true,
     primary: '#2F54EB',
     radius: 6,
     showDraw: false,
@@ -21,6 +21,6 @@ export const useSettingStore = defineStore({
   persist: <PersistedStateOptions>{
     key: 'vue-setting-state',
     storage: window.localStorage,
-    paths: ['collapsed', 'language', 'themeMode', 'menuMode', 'showHeader', 'showTabs', 'showTags', 'primary', 'radius'],
+    paths: ['collapsed', 'language', 'themeMode', 'menuMode', 'showHeader', 'showTabs', 'showBreadcrumb', 'primary', 'radius'],
   },
 });

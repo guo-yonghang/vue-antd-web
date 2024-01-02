@@ -14,8 +14,26 @@
     </div>
     <div class="setting-item">
       <div class="title">
-        <span>展示顶部：</span>
+        <span>展示顶部栏：</span>
         <a-radio-group v-model:value="settingStore.showHeader" button-style="solid">
+          <a-radio-button :value="true">展示</a-radio-button>
+          <a-radio-button :value="false">不展示</a-radio-button>
+        </a-radio-group>
+      </div>
+    </div>
+    <div class="setting-item">
+      <div class="title">
+        <span>展示标签栏：</span>
+        <a-radio-group v-model:value="settingStore.showTabs" button-style="solid">
+          <a-radio-button :value="true">展示</a-radio-button>
+          <a-radio-button :value="false">不展示</a-radio-button>
+        </a-radio-group>
+      </div>
+    </div>
+    <div class="setting-item">
+      <div class="title">
+        <span>展示吐司栏：</span>
+        <a-radio-group v-model:value="settingStore.showBreadcrumb" button-style="solid">
           <a-radio-button :value="true">展示</a-radio-button>
           <a-radio-button :value="false">不展示</a-radio-button>
         </a-radio-group>
@@ -35,11 +53,11 @@
 
 <style scoped lang="less">
   .setting-item {
-    margin-bottom: 15px;
+    margin-bottom: 35px;
 
     .title {
+      margin-bottom: 20px;
       font-weight: bold;
-      padding: 20px 0;
       display: flex;
       justify-content: space-between;
       align-items: center;

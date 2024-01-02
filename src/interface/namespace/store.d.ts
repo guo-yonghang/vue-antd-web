@@ -18,7 +18,7 @@ export namespace Store {
     menuMode: 'light' | 'dark';
     showHeader: boolean;
     showTabs: boolean;
-    showTags: boolean;
+    showBreadcrumb: boolean;
     primary: string;
     radius: number;
     showDraw: boolean;
