@@ -27,7 +27,7 @@
       token: {
         colorPrimary: primary,
         colorLink: primary,
-        borderRadius: radius + 'px',
+        borderRadius: radius,
       },
     };
   });
