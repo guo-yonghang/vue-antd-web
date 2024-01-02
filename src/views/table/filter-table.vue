@@ -59,7 +59,7 @@
   ];
 
   const rowSelection: TableProps['rowSelection'] = {
-    onChange: (selectedRowKeys: string[], selectedRows: DataType[]) => {
+    onChange: (selectedRowKeys: (string | number)[], selectedRows: DataType[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
     getCheckboxProps: (record: DataType) => ({

@@ -13,7 +13,8 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue,.ts src --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\""
+    "format": "prettier --write \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "update": "npx npm-check-updates"
   },
   "dependencies": {
     "@vueuse/core": "^10.7.1",

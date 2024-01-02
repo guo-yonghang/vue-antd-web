@@ -4,13 +4,13 @@ import { createVitePlugins } from './build/plugins';
 import { createViteBuild } from './build/build';
 
 export default defineConfig({
+  base: './',
   plugins: createVitePlugins(),
   build: createViteBuild(),
   resolve: {
     alias: {
-      '@': resolve('src'),
+      '@': resolve(__dirname, './src'),
     },
-    dedupe: ['vue'],
   },
   css: {
     preprocessorOptions: {

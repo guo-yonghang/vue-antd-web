@@ -15,12 +15,16 @@
         <layout-content />
       </a-layout-content>
     </a-layout>
+    <setting-draw />
+    <setting-affix />
   </a-layout>
 </template>
 
 <script lang="ts" setup>
   import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
   import { useSettingStore } from '@/store';
+  import SettingDraw from '@/layout/components/SettingDraw.vue';
+  import SettingAffix from '@/layout/components/SettingAffix.vue';
   import LayoutHeader from '@/layout/components/LayoutHeader.vue';
   import LayoutSider from '@/layout/components/LayoutSider.vue';
   import LayoutContent from '@/layout/components/LayoutContent.vue';
@@ -33,6 +37,7 @@
     background-color: #ffffff !important;
     padding: 0 24px !important;
     height: 60px !important;
+    border-left: 1px solid #eeeeee;
     display: flex;
     justify-content: space-between;
     align-items: center;

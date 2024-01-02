@@ -1,9 +1,56 @@
+.loop(@count) when (@count > 0) {
+  .mt@{count} {
+    margin-top: (1px * @count) !important;
+  }
+  .mr@{count} {
+    margin-right: (1px * @count) !important;
+  }
+  .mb@{count} {
+    margin-bottom: (1px * @count) !important;
+  }
+  .ml@{count} {
+    margin-left: (1px * @count) !important;
+  }
+  .pt@{count} {
+    padding-top: (1px * @count) !important;
+  }
+  .pr@{count} {
+    padding-right: (1px * @count) !important;
+  }
+  .pb@{count} {
+    padding-bottom: (1px * @count) !important;
+  }
+  .pl@{count} {
+    padding-left: (1px * @count) !important;
+  }
+  .fs@{count} {
+    font-size: (1px * @count) !important;
+  }
+  .loop((@count - 1))
+}
+
+.loop(20);
+
 .full {
   width: 100%;
   height: 100%;
 }
 
+.flx {
+  display: flex;
+}
+
+.flx1 {
+  flex: 1;
+}
+
 .flxc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flxsc {
   display: flex;
   justify-content: center;
   align-items: center;

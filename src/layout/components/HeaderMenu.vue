@@ -5,7 +5,7 @@
         <super-icon name="BellOutlined" />
       </a-badge>
     </a-button>
-    <a-button type="text" shape="circle" @click="SettingDrawRef.open()">
+    <a-button type="text" shape="circle" @click="settingStore.showDraw = true">
       <super-icon name="SettingOutlined" />
     </a-button>
     <a-button type="text" shape="circle" @click="toggleFullScreen">
@@ -38,22 +38,21 @@
     </a-dropdown>
   </a-space>
   <notice-modal ref="NoticeBoxRef" />
-  <setting-draw ref="SettingDrawRef" />
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useFullscreen } from '@vueuse/core';
   import { message, Modal } from 'ant-design-vue';
+  import { useFullscreen } from '@vueuse/core';
+  import { useSettingStore } from '@/store';
   import { useLoading } from '@/hooks';
   import NoticeModal from '@/layout/components/NoticeModal.vue';
-  import SettingDraw from '@/layout/components/SettingDraw.vue';
 
-  const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
+  const settingStore = useSettingStore();
   const { loading, setLoading } = useLoading();
+  const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 
   const NoticeBoxRef = ref();
-  const SettingDrawRef = ref();
 
   const handleMenuClick = ({ key }: { key: string }) => {
     if (key === '2') {
