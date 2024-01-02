@@ -9,7 +9,7 @@ export default defineConfig({
   build: createViteBuild(),
   resolve: {
     alias: {
-      '@': resolve('src'),
+      '@': resolve(__dirname, './src'),
     },
   },
   css: {

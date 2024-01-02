@@ -13,13 +13,7 @@ npm run lint 代码检查
 npm run build 项目打包
 npm run preview 预览打包
 npm run format 格式化代码
-```
-
-#### 其他问题
-
-```text
-Tooltip组件箭头问题已提issues
-Vue3.4Modal销毁问题等待antdv更新
+npm run update 检查依赖更新
 ```
 
 #### SuperTable

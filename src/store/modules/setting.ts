@@ -14,6 +14,7 @@ export const useSettingStore = defineStore({
     showTags: true,
     primary: '#2F54EB',
     radius: 6,
+    showDraw: false,
   }),
   getters: {},
   actions: {},

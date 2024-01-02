@@ -21,5 +21,6 @@ export namespace Store {
     showTags: boolean;
     primary: string;
     radius: number;
+    showDraw: boolean;
   }
 }
