@@ -60,10 +60,10 @@
         :scroll="{ ...getScrollConfig, y: yHeight }"
         @change="handleChange"
       >
-        <template #headerCell="{ text, record, index, column }">
+        <template #headerCell="{ text, record, index, column }" v-if="$slots.headerCell">
           <slot name="headerCell" :text="text" :record="record" :index="index" :column="column" />
         </template>
-        <template #bodyCell="{ text, record, index, column }">
+        <template #bodyCell="{ text, record, index, column }" v-if="$slots.bodyCell">
           <slot name="bodyCell" :text="text" :record="record" :index="index" :column="column" />
         </template>
       </a-table>
