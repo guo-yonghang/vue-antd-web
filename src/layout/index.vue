@@ -33,6 +33,7 @@
     background-color: #ffffff !important;
     padding: 0 24px !important;
     height: 60px !important;
+    border-left: 1px solid #eeeeee;
     display: flex;
     justify-content: space-between;
     align-items: center;
