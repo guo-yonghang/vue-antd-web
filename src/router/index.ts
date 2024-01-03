@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouterOptions } from 'vue-router';
-import { useGlobalStore } from '@/store';
+import { useGlobalStore, useTabStore } from '@/store';
 import NProgress from 'nprogress';
 
 const router = createRouter({
@@ -53,7 +53,9 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach(() => {
+router.afterEach((to) => {
+  const tabStore = useTabStore();
+  tabStore.addTab(to);
   NProgress.done();
 });
 

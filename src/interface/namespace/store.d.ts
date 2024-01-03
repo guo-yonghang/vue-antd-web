@@ -23,4 +23,14 @@ export namespace Store {
     radius: number;
     showDraw: boolean;
   }
+
+  // tab state type
+  export interface TabState {
+    tempList: {
+      name: string;
+      title: string;
+      enTitle: string;
+      icon?: string;
+    }[];
+  }
 }

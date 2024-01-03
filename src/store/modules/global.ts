@@ -77,6 +77,9 @@ const formatRouteData = (list: MenuItemType[], parentPath: string = ''): RouteRe
 // 递归查找首页路由名称
 const findHomeRouteName = (list: MenuItemType[], parentName: string = ''): string => {
   if (!list.length) return '403';
+  list.sort((prev, next) => {
+    return prev.idx - next.idx;
+  });
   const root = list[0];
   const currentName = `${parentName}${parentName ? '/' : ''}${root.path}`;
   if (root.type === 1) return currentName;
