@@ -1,23 +1,37 @@
+import type { JSX } from 'vue/jsx-runtime';
 import type { TableProps } from 'ant-design-vue';
 
-// type of pagination
+/**
+ * PaginationType interface for pagination related properties.
+ * @interface
+ * @property {number} pageNum - The current page number.
+ * @property {number} pageSize - The number of items per page.
+ * @property {number} total - The total number of items.
+ */
 export interface PaginationType extends PageType {
   pageNum: number;
   pageSize: number;
   total: number;
 }
 
+/**
+ * ResDataType interface for response data type.
+ */
 export interface ResDataType<T> extends PaginationType {
   list: T[];
 }
 
-// type of request's config
+/**
+ * SearchConfigType interface for search configuration.
+ */
 export interface SearchConfigType extends Record<string, any> {
   searchText?: string;
   resetText?: string;
 }
 
-// type of request's colums
+/**
+ * SearchColumnsItemType interface for search column item.
+ */
 interface SearchColumnsItemType {
   key: string;
   label: string;
@@ -26,9 +40,14 @@ interface SearchColumnsItemType {
   attrs?: Record<string, any>;
 }
 
+/**
+ * Type alias for an array of SearchColumnsItemType.
+ */
 export type SearchColumnsType = SearchColumnsItemType[];
 
-// type of component's props
+/**
+ * SuperTableProps interface for SuperTable component properties.
+ */
 export interface SuperTableProps {
   rowKey?: string;
   request?: (params: any) => Promise<T>;
@@ -44,7 +63,9 @@ export interface SuperTableProps {
   formatParams?: (params: any) => void;
 }
 
-// type of component's emits
+/**
+ * SuperTableEmit interface for SuperTable component emits.
+ */
 export interface SuperTableEmit {
   (e: 'request', value: any): void;
 
