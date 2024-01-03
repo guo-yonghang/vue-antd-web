@@ -15,27 +15,27 @@
     <div class="setting-item">
       <div class="title">
         <span>展示顶部栏：</span>
-        <a-radio-group v-model:value="settingStore.showHeader" button-style="solid">
+        <a-radio-group v-model:value="settingStore.showHeader" button-style="outline">
           <a-radio-button :value="true">展示</a-radio-button>
-          <a-radio-button :value="false">不展示</a-radio-button>
+          <a-radio-button :value="false">隐藏</a-radio-button>
         </a-radio-group>
       </div>
     </div>
     <div class="setting-item">
       <div class="title">
         <span>展示标签栏：</span>
-        <a-radio-group v-model:value="settingStore.showTabs" button-style="solid">
+        <a-radio-group v-model:value="settingStore.showTabs" button-style="outline">
           <a-radio-button :value="true">展示</a-radio-button>
-          <a-radio-button :value="false">不展示</a-radio-button>
+          <a-radio-button :value="false">隐藏</a-radio-button>
         </a-radio-group>
       </div>
     </div>
     <div class="setting-item">
       <div class="title">
         <span>展示吐司栏：</span>
-        <a-radio-group v-model:value="settingStore.showBreadcrumb" button-style="solid">
+        <a-radio-group v-model:value="settingStore.showBreadcrumb" button-style="outline">
           <a-radio-button :value="true">展示</a-radio-button>
-          <a-radio-button :value="false">不展示</a-radio-button>
+          <a-radio-button :value="false">隐藏</a-radio-button>
         </a-radio-group>
       </div>
     </div>

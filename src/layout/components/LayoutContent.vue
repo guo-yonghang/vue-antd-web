@@ -14,17 +14,21 @@
 </template>
 
 <script lang="ts" setup>
-  import { useSettingStore } from '@/store';
+  import { computed } from 'vue';
+  import { useSettingStore, useTabStore } from '@/store';
   import TabsMenu from '@/layout/components/TabsMenu.vue';
 
+  const tabStore = useTabStore();
   const settingStore = useSettingStore();
 
-  const keepAliveList: string[] = [];
+  const keepAliveList = computed(() => {
+    return tabStore.tempList.map((item) => item.name);
+  });
 </script>
 
 <style lang="less" scoped>
   .ant-layout-content {
-    margin: 24px 16px;
+    margin: 16px;
     padding: 15px;
     background-color: #ffffff;
   }
