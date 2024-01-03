@@ -44,6 +44,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SuperCascader: typeof import('./src/components/SuperCascader/index.vue')['default']
+    SuperForm: typeof import('./src/components/SuperForm/index.vue')['default']
     SuperIcon: typeof import('./src/components/SuperIcon/index.vue')['default']
     SuperTable: typeof import('./src/components/SuperTable/index.vue')['default']
   }
