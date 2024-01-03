@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-menu">
+  <div class="tab-menu pt2">
     <a-tabs :activeKey="route.name" hide-add type="editable-card" size="small" @tabClick="handleTabClick" @edit="handleTabEdit">
       <a-tab-pane v-for="pane in tabStore.tempList" :key="pane.name" :closable="pane.name !== globalStore.homeName" :class="{ home: pane.name === globalStore.homeName }">
         <template #tab>
@@ -58,7 +58,6 @@
 <style lang="less" scoped>
   .tab-menu {
     width: 100%;
-    padding-top: 4px;
   }
 
   :deep(.ant-tabs-nav) {

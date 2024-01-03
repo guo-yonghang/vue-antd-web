@@ -75,12 +75,12 @@
   import { ref, computed, watch, onBeforeMount, h } from 'vue';
   import { message } from 'ant-design-vue';
   import { SearchOutlined, ReloadOutlined, ExportOutlined, DownOutlined, UpOutlined } from '@ant-design/icons-vue';
-  import { SuperTableProps, SuperTableEmit } from './index';
+  import { SuperTableProps, SuperTableEmits } from './index';
   import { useTableRequest } from './hooks.ts';
   import { useElementSize, useWindowSize, useElementVisibility } from '@vueuse/core';
   import { useSettingStore } from '@/store';
 
-  const emits = defineEmits<SuperTableEmit>();
+  const emits = defineEmits<SuperTableEmits>();
 
   const props = withDefaults(defineProps<SuperTableProps>(), {
     rowKey: 'id',

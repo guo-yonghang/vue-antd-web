@@ -2,11 +2,7 @@ import type { JSX } from 'vue/jsx-runtime';
 import type { TableProps } from 'ant-design-vue';
 
 /**
- * PaginationType interface for pagination related properties.
- * @interface
- * @property {number} pageNum - The current page number.
- * @property {number} pageSize - The number of items per page.
- * @property {number} total - The total number of items.
+ * @description PaginationType interface for pagination related properties.
  */
 export interface PaginationType extends PageType {
   pageNum: number;
@@ -15,14 +11,14 @@ export interface PaginationType extends PageType {
 }
 
 /**
- * ResDataType interface for response data type.
+ * @description ResDataType interface for response data type.
  */
 export interface ResDataType<T> extends PaginationType {
   list: T[];
 }
 
 /**
- * SearchConfigType interface for search configuration.
+ * @description SearchConfigType interface for search configuration.
  */
 export interface SearchConfigType extends Record<string, any> {
   searchText?: string;
@@ -30,7 +26,7 @@ export interface SearchConfigType extends Record<string, any> {
 }
 
 /**
- * SearchColumnsItemType interface for search column item.
+ * @description SearchColumnsItemType interface for search column item.
  */
 interface SearchColumnsItemType {
   key: string;
@@ -41,12 +37,12 @@ interface SearchColumnsItemType {
 }
 
 /**
- * Type alias for an array of SearchColumnsItemType.
+ * @description Type alias for an array of SearchColumnsItemType.
  */
 export type SearchColumnsType = SearchColumnsItemType[];
 
 /**
- * SuperTableProps interface for SuperTable component properties.
+ * @description SuperTableProps interface for SuperTable component properties.
  */
 export interface SuperTableProps {
   rowKey?: string;
@@ -64,9 +60,9 @@ export interface SuperTableProps {
 }
 
 /**
- * SuperTableEmit interface for SuperTable component emits.
+ * @description SuperTableEmit interface for SuperTable component emits.
  */
-export interface SuperTableEmit {
+export interface SuperTableEmits {
   (e: 'request', value: any): void;
 
   (e: 'search', value: any): void;
