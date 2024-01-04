@@ -13,7 +13,7 @@ export const useSettingStore = defineStore({
     showTabs: true,
     showBreadcrumb: true,
     primary: '#2F54EB',
-    radius: 6,
+    radius: 4,
     showDraw: false,
   }),
   getters: {},
