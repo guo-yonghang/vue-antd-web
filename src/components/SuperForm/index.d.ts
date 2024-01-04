@@ -1,16 +1,15 @@
-import type { JSX } from 'vue/jsx-runtime';
-import type { CSSProperties } from 'vue';
-
 /**
  * @interface FormItemType
  * @description Defines the structure of a form item.
  */
 interface FormItemType {
+  span?: number;
   key: string;
   label: string;
-  type: 'input' | 'select' | 'input-number' | 'cascader' | 'date' | 'date-range' | 'time' | 'time-range';
+  type: 'input' | 'select' | 'radio' | 'checkbox' | 'input-number' | 'cascader' | 'date' | 'date-range' | 'time' | 'time-range' | 'rate' | 'slider';
   render?: () => JSX.Element;
   attrs?: Record<string, any>;
+  config?: Record<string, any>;
 }
 
 /**
@@ -20,13 +19,12 @@ interface FormItemType {
 export interface SuperFormProps {
   items?: FormItemType[];
   rules?: Record<string, any>;
-  gridCount?: 1 | 2 | 3;
+  gridSpan?: number;
   gridGutter?: number[];
   showFooter?: boolean;
   showCancel?: boolean;
   cancelText?: string;
   submitText?: string;
-  footerAlign?: CSSProperties['WebkitJustifyContent'];
 }
 
 /**

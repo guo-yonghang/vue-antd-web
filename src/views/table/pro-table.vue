@@ -80,6 +80,11 @@
       },
     },
     {
+      key: 'inputNumber',
+      label: 'inputNumber',
+      type: 'input-number',
+    },
+    {
       key: 'cascader',
       label: 'cascader',
       type: 'cascader',

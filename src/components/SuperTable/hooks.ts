@@ -1,7 +1,7 @@
 import { ref, reactive, computed } from 'vue';
-import { PaginationType, ResDataType, SuperTableProps, SuperTableEmit } from './index';
+import { PaginationType, ResDataType, SuperTableProps, SuperTableEmits } from './index';
 
-export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmit) => {
+export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmits) => {
   // loading status of table
   const loading = ref<boolean>(false);
 
