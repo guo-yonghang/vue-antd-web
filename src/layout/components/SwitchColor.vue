@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { message } from 'ant-design-vue';
   import { useSettingStore } from '@/store';
   import { useLoading } from '@/hooks';
   import { colorList } from '@/constants';
@@ -29,8 +28,7 @@
   const handleColor = ({ color, key }: Record<string, string>) => {
     if (color === settingStore.primary) return;
     if (loading.value) return;
-    setLoading(true);
-    message.loading({ content: `主题颜色：${key}`, duration: 1 });
+    setLoading(true, `主题颜色：${key}`);
     setTimeout(() => {
       settingStore.primary = color;
       setLoading(false);

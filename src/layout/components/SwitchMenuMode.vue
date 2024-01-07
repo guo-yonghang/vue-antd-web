@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-  import { message } from 'ant-design-vue';
   import { useSettingStore } from '@/store';
   import { useLoading } from '@/hooks';
   import { menuModeList } from '@/constants';
@@ -25,8 +24,7 @@
   const handleMode = ({ value, key }) => {
     if (settingStore.menuMode === value) return;
     if (loading.value) return;
-    setLoading(true);
-    message.loading({ content: `菜单主题：${key}`, duration: 1 });
+    setLoading(true, `菜单主题：${key}`);
     setTimeout(() => {
       settingStore.menuMode = value;
       setLoading(false);
