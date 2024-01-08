@@ -31,6 +31,7 @@
     margin: 16px;
     padding: 15px;
     background-color: #ffffff;
+    border-radius: var(--radius);
   }
 
   .fade-leave-active,

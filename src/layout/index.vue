@@ -33,6 +33,7 @@
     padding: 0 20px !important;
     height: 60px !important;
     border-left: 1px solid #eeeeee;
+    border-radius: var(--radius);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,5 +41,6 @@
 
   .ant-layout-sider {
     color: #ffffff;
+    border-radius: var(--radius);
   }
 </style>
