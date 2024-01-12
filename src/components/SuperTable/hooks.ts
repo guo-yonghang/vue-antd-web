@@ -136,6 +136,10 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmits) 
         };
   });
 
+  const getTotalText = (total: number) => {
+    return `共 ${total} 条数据`;
+  };
+
   return {
     loading,
     expandVisible,
@@ -155,5 +159,6 @@ export const useTableRequest = (props: SuperTableProps, emits: SuperTableEmits) 
     getRowClassConfig,
     getScrollConfig,
     selection,
+    getTotalText,
   };
 };

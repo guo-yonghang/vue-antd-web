@@ -55,7 +55,7 @@
         :row-key="rowKey"
         :loading="loading || resizing"
         :dataSource="dataSource"
-        :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total } : false"
+        :pagination="showPage ? { current: pagination.pageNum, pageSize: pagination.pageSize, total: pagination.total, showTotal: getTotalText } : false"
         :row-selection="selection"
         :row-class-name="getRowClassConfig"
         :scroll="{ ...getScrollConfig, y: yHeight }"
@@ -111,6 +111,7 @@
     getRowClassConfig,
     getScrollConfig,
     selection,
+    getTotalText,
   } = useTableRequest(props, emits);
 
   const settingStore = useSettingStore();

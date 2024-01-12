@@ -52,9 +52,9 @@
   // 通过icon的值渲染图标内容
   const getIconContext = (icon: string) => {
     if (isHttp(icon)) {
-      return <img src={icon} style="width:16px;height:16px;" alt="menu-icon" />;
+      return <img src={icon} style="width:20px;height:20px;" alt="menu-icon" />;
     }
-    return <span>{icon && <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="16" />}</span>;
+    return <span>{icon && <super-icon name={icon} type={icon.includes('svg-') ? 'svg' : 'antd'} size="20" />}</span>;
   };
 
   // 监听自定义路由表处理menu数据
